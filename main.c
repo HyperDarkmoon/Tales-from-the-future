@@ -15,6 +15,7 @@ int main(int argc, char const *argv[])
     Mix_Chunk *mus;
     texte txte;
     SDL_Event event;
+    char *subfolder_path = malloc(256);
     int boucle=1;
     //Initialization, if it fails program exits
     if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER)==-1)
