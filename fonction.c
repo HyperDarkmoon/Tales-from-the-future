@@ -7,7 +7,17 @@
 // Initializes background image
 void initialiser_imageBACK(image *imge)
 {
-    imge->url = "final.bmp";
+    char subfolder_path[256];
+    FILE *fp = fopen("config.txt", "r");
+    if (fp == NULL)
+    {
+        printf("unable to open config file\n");
+        return;
+    }
+    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
+    fclose(fp);
+    strcat(subfolder_path, "/final.bmp");
+    imge->url = subfolder_path;
     imge->img = SDL_LoadBMP(imge->url);
     if (imge->img == NULL)
     {
@@ -25,7 +35,17 @@ void initialiser_imageBACK(image *imge)
 //Initializes the image for the first button
 void initialiser_imageBOUTON1(image *imge)
 {
-    imge->url = "newgame.png";
+    char subfolder_path[256];
+    FILE *fp = fopen("config.txt", "r");
+    if (fp == NULL)
+    {
+        printf("unable to open config file\n");
+        return;
+    }
+    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
+    fclose(fp);
+    strcat(subfolder_path, "/newgame.png");
+    imge->url = subfolder_path; //newgame.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -43,7 +63,17 @@ void initialiser_imageBOUTON1(image *imge)
 //Initializes the image for the second button
 void initialiser_imageBOUTON2(image *imge)
 {
-    imge->url = "quit.png";
+    char subfolder_path[256];
+    FILE *fp = fopen("config.txt", "r");
+    if (fp == NULL)
+    {
+        printf("unable to open config file\n");
+        return;
+    }
+    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
+    fclose(fp);
+    strcat(subfolder_path, "/quit.png");
+    imge->url = subfolder_path; //quit.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -120,6 +150,17 @@ void liberer_musiquebref(Mix_Chunk *music)
 //initializes text
 void initialiser_texte(texte *txte)
 {
+    /*char subfolder_path[256];
+    FILE *fp = fopen("config.txt", "r");
+    if (fp == NULL)
+    {
+        printf("unable to open config file\n");
+        return;
+    }
+    fscanf(fp, "MY_SUBFOLDER_FONTS=%s\n", subfolder_path);
+    fclose(fp);
+    printf("%s",subfolder_path);
+    strcat(subfolder_path, "/OpenSans-Bold.ttf");*/
     TTF_Init();
     txte->police = TTF_OpenFont("OpenSans-Bold.ttf", 100);
     txte->color_txt.r = 255;
@@ -131,7 +172,7 @@ void initialiser_texte(texte *txte)
 }
 
 //prints text (the title in this case)
-void afficher_texte(SDL_Surface *screen, texte txte).
+void afficher_texte(SDL_Surface *screen, texte txte)
 {
     txte.txt = TTF_RenderText_Blended(txte.police, "TALES FROM THE FUTURE", txte.color_txt);
     SDL_BlitSurface(txte.txt, NULL, screen, &txte.pos_txt);
