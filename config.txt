@@ -1,0 +1,2 @@
+MY_SUBFOLDER=./imgs
+MY_SUBFOLDER_FONTS=./fonts
