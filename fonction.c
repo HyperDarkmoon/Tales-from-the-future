@@ -7,6 +7,7 @@
 // Initializes background image
 void initialiser_imageBACK(image *imge)
 {
+    //Looks for the image in the subfolder then initializes it
     char subfolder_path[256];
     FILE *fp = fopen("config.txt", "r");
     if (fp == NULL)
@@ -32,9 +33,10 @@ void initialiser_imageBACK(image *imge)
     imge->pos_img_affiche.w = SCREEN_W;
 }
 
-//Initializes the image for the first button
+// Initializes the image for the first button
 void initialiser_imageBOUTON1(image *imge)
 {
+    //Looks for the image in the subfolder then initializes it
     char subfolder_path[256];
     FILE *fp = fopen("config.txt", "r");
     if (fp == NULL)
@@ -45,7 +47,7 @@ void initialiser_imageBOUTON1(image *imge)
     fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
     fclose(fp);
     strcat(subfolder_path, "/newgame.png");
-    imge->url = subfolder_path; //newgame.png
+    imge->url = subfolder_path; // newgame.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -53,14 +55,42 @@ void initialiser_imageBOUTON1(image *imge)
         return;
     }
     imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 700;
-    imge->pos_img_affiche.w = 0;
-    imge->pos_img_affiche.h = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 160;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
     imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 160;
 }
 
-//Initializes the image for the second button
+void initialiser_imageBOUTON1_alt(image *imge)
+{
+    //Looks for the image in the subfolder then initializes it
+    char subfolder_path[256];
+    FILE *fp = fopen("config.txt", "r");
+    if (fp == NULL)
+    {
+        printf("unable to open config file\n");
+        return;
+    }
+    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
+    fclose(fp);
+    strcat(subfolder_path, "/newgame_alt.png");
+    imge->url = subfolder_path; // newgame.png
+    imge->img = IMG_Load(imge->url);
+    if (imge->img == NULL)
+    {
+        printf("unable to load background image %s \n", SDL_GetError());
+        return;
+    }
+    imge->pos_img_ecran.x = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 160;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
+    imge->pos_img_affiche.x = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 160;
+}
+
+// Initializes the image for the second button
 void initialiser_imageBOUTON2(image *imge)
 {
     char subfolder_path[256];
@@ -73,7 +103,7 @@ void initialiser_imageBOUTON2(image *imge)
     fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
     fclose(fp);
     strcat(subfolder_path, "/quit.png");
-    imge->url = subfolder_path; //quit.png
+    imge->url = subfolder_path; // quit.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -81,57 +111,56 @@ void initialiser_imageBOUTON2(image *imge)
         return;
     }
     imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 400;
-    imge->pos_img_affiche.w = 0;
-    imge->pos_img_affiche.h = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 112;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
     imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 112;
 }
 
-//Prints BMP image
+// Prints BMP image
 void afficher_imageBMP(SDL_Surface *screen, image imge)
 {
     SDL_BlitSurface(imge.img, &imge.pos_img_affiche, screen, &imge.pos_img_ecran);
 }
 
-//Prints first button
+// Prints first button
 void afficher_imageBTN1(SDL_Surface *screen, image imge)
 {
     SDL_BlitSurface(imge.img, NULL, screen, &imge.pos_img_ecran);
 }
 
-//Prints second button
+// Prints second button
 void afficher_imageBTN2(SDL_Surface *screen, image imge)
 {
     SDL_BlitSurface(imge.img, NULL, screen, &imge.pos_img_ecran);
 }
 
-//frees images from memory
+// frees images from memory
 void liberer_image(image imge)
 {
     SDL_FreeSurface(imge.img);
 }
 
-
-//Initializes the audio files
+// Initializes the audio files
 void initialiser_audio(Mix_Music *music)
 {
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
     {
         printf("%s", SDL_GetError());
     }
-    music = Mix_LoadMUS("yassine_jeu_menu.wav");
+    music = Mix_LoadMUS("Main_Menu_Msc.wav");
     Mix_PlayMusic(music, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 3.5);
 }
 
-//frees music files from memory
+// frees music files from memory
 void liberer_musique(Mix_Music *music)
 {
     Mix_FreeMusic(music);
 }
 
-//Initializes sound effects
+// Initializes sound effects
 void initialiser_audiobref(Mix_Chunk *music)
 {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
@@ -141,13 +170,13 @@ void initialiser_audiobref(Mix_Chunk *music)
         printf("%s", SDL_GetError());
 }
 
-//frees memory from sound effects
+// frees memory from sound effects
 void liberer_musiquebref(Mix_Chunk *music)
 {
     Mix_FreeChunk(music);
 }
 
-//initializes text
+// initializes text
 void initialiser_texte(texte *txte)
 {
     /*char subfolder_path[256];
@@ -161,6 +190,7 @@ void initialiser_texte(texte *txte)
     fclose(fp);
     printf("%s",subfolder_path);
     strcat(subfolder_path, "/OpenSans-Bold.ttf");*/
+    //To be fixed
     TTF_Init();
     txte->police = TTF_OpenFont("OpenSans-Bold.ttf", 100);
     txte->color_txt.r = 255;
@@ -171,14 +201,15 @@ void initialiser_texte(texte *txte)
     txte->pos_txt.y = 0;
 }
 
-//prints text (the title in this case)
+// prints text (the title in this case)
 void afficher_texte(SDL_Surface *screen, texte txte)
 {
     txte.txt = TTF_RenderText_Blended(txte.police, "TALES FROM THE FUTURE", txte.color_txt);
     SDL_BlitSurface(txte.txt, NULL, screen, &txte.pos_txt);
+    SDL_FreeSurface(txte.txt);
 }
 
-//frees text from memory
+// frees text from memory
 void liberer_texte(texte txte)
 {
     TTF_CloseFont(txte.police);
