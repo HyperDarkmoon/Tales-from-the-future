@@ -12,3 +12,9 @@
 **Working on subfolder management, images dont, fonts left**  
 
 **Code commented**  
+
+## 04/02/2023
+
+**Created Menu Music**
+**Added Main Menu Music to code**
+**Fixed infinite text printing bug**
