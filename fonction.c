@@ -120,7 +120,7 @@ void initialiser_audio(Mix_Music *music)
     {
         printf("%s", SDL_GetError());
     }
-    music = Mix_LoadMUS("track.mp3");
+    music = Mix_LoadMUS("yassine_jeu_menu.wav");
     Mix_PlayMusic(music, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 3.5);
 }
