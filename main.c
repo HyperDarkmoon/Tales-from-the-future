@@ -28,7 +28,7 @@ int main(int argc, char const *argv[]) {
     initialiser_imageBOUTON1(&IMAGE_BTN1);
     initialiser_imageBOUTON2(&IMAGE_BTN2);
     initialiser_imageBOUTON1_alt(&IMAGE_BTN1_alt);
-    initialiser_audio(&music);
+    initialiser_audio(music);
     initialiser_texte(&txte);
 
     // main loop
