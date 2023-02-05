@@ -4,6 +4,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
+#include <string.h>
 #define SCREEN_H 770
 #define SCREEN_W 1366
 
@@ -24,8 +25,9 @@ typedef struct {
 }texte;
 
 
-//fonctions image
+//fonctions image*
 void initialiser_imageBACK(image *imge);
+void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name);
 void initialiser_imageBOUTON1(image *imge);
 void initialiser_imageBOUTON2(image *imge);
 void initialiser_imageBOUTON3(image *imge);

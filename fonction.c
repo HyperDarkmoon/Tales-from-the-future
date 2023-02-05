@@ -22,143 +22,25 @@ void initialiser_imageBACK(image *imge)
     imge->pos_img_affiche.w = SCREEN_W;
 }
 
-// Initializes the image for the first button
-void initialiser_imageBOUTON1(image *imge)
+// Initializes All the buttons per parameter
+void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name)
 {
-    imge->url = ("imgs/newgame.png"); // newgame.png
+    char link[25];
+    strcpy(link,"imgs/");
+    strcat(link,name);
+    imge->url = (link); 
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
         printf("unable to load background image %s \n", SDL_GetError());
         return;
     }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 252;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 252;
-}
-
-void initialiser_imageBOUTON2(image *imge)
-{
-    imge->url = ("imgs/Settings.png"); // newgame.png
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
-    }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 204;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 204;
-}
-
-void initialiser_imageBOUTON3(image *imge)
-{
-    imge->url = ("imgs/Credits.png"); // newgame.png
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
-    }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 160;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 160;
-}
-
-// Initializes the image for the second button
-void initialiser_imageBOUTON4(image *imge)
-{
-    imge->url = ("imgs/quit.png"); // quit.png
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
-    }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 112;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 112;
-}
-
-void initialiser_imageBOUTON1_alt(image *imge)
-{
-    imge->url = ("imgs/newgame_alt.png"); // newgame.png
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
-    }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 252;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 252;
-}
-
-void initialiser_imageBOUTON2_alt(image *imge)
-{
-    imge->url = ("imgs/Settingsalt.png"); // newgame.png
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
-    }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 204;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 204;
-}
-
-void initialiser_imageBOUTON3_alt(image *imge)
-{
-    imge->url = ("imgs/Creditsalt.png"); // newgame.png
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
-    }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 160;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 160;
-}
-
-void initialiser_imageBOUTON4_alt(image *imge)
-{
-    //Looks for the image in the subfolder then initializes it
-    imge->url = ("imgs/exitalt.png"); // exitalt.png
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
-    }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 112;
-    imge->pos_img_affiche.w = 200;
-    imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 112;
+    imge->pos_img_ecran.x = x;
+    imge->pos_img_ecran.y = SCREEN_H - y;
+    imge->pos_img_affiche.w = h;
+    imge->pos_img_affiche.h = w;
+    imge->pos_img_affiche.x = x;
+    imge->pos_img_affiche.y = SCREEN_H - y;
 }
 
 // Prints BMP image

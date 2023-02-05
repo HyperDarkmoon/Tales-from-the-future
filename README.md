@@ -41,3 +41,5 @@
 **Added Settings menu with placeholder buttons for back and fullscreen**
 
 **Working on fullscreen mode**
+
+**Made all the initializeButton functions into the same one**

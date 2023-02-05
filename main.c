@@ -5,6 +5,7 @@
 #include "fonction.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // main function
 int main(int argc, char const *argv[])
@@ -35,18 +36,20 @@ int main(int argc, char const *argv[])
         return -1;
     }
     int fullscreen = 1;
-    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_FULLSCREEN | SDL_DOUBLEBUF);
+    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
     // initialization function calls
+    char buttonOne[25],buttonOneAlt[25],buttonTwo[25],buttonTwoAlt[25],buttonThree[25],buttonThreeAlt[25],buttonFour[25],buttonFourAlt[25];
+
     initialiser_imageBACK(&IMAGE);
-    initialiser_imageBOUTON1(&IMAGE_BTN1);
-    initialiser_imageBOUTON2(&IMAGE_BTN2);
-    initialiser_imageBOUTON1_alt(&IMAGE_BTN1_alt);
-    initialiser_imageBOUTON2_alt(&IMAGE_BTN2_alt);
-    initialiser_imageBOUTON3(&IMAGE_BTN3);
-    initialiser_imageBOUTON4(&IMAGE_BTN4);
-    initialiser_imageBOUTON3_alt(&IMAGE_BTN3_alt);
-    initialiser_imageBOUTON4_alt(&IMAGE_BTN4_alt);
+    initialiser_imageBOUTON(&IMAGE_BTN1,0,252,1112,200,"newgame.png");
+    initialiser_imageBOUTON(&IMAGE_BTN2,0,204,112,200,"Settings.png");
+    initialiser_imageBOUTON(&IMAGE_BTN3,0,160,112,200,"Credits.png");
+    initialiser_imageBOUTON(&IMAGE_BTN4,0,112,112,200,"quit.png");
+    initialiser_imageBOUTON(&IMAGE_BTN1_alt,0,252,200,112,"newgame_alt.png");
+    initialiser_imageBOUTON(&IMAGE_BTN2_alt,0,204,112,200,"Settingsalt.png");
+    initialiser_imageBOUTON(&IMAGE_BTN3_alt,0,160,112,200,"Creditsalt.png");
+    initialiser_imageBOUTON(&IMAGE_BTN4_alt,0,112,112,200,"exitalt.png");
     initialiser_audio(music);
     initialiser_texte(&txte);
 
@@ -206,7 +209,7 @@ int main(int argc, char const *argv[])
     liberer_image(IMAGE_BTN2_alt);
     liberer_image(IMAGE_BTN3_alt);
     liberer_image(IMAGE_BTN4_alt);
-    liberer_musique(music);
+    //liberer_musique(music);
     // liberer_musiquebref(mus);
 
     liberer_texte(txte);
