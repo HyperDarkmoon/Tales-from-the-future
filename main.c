@@ -42,6 +42,7 @@ int main(int argc, char const *argv[])
     char buttonOne[25],buttonOneAlt[25],buttonTwo[25],buttonTwoAlt[25],buttonThree[25],buttonThreeAlt[25],buttonFour[25],buttonFourAlt[25];
 
     initialiser_imageBACK(&IMAGE);
+    //Calling for the following function should include the image variable, x,y,h,w, and the image name
     initialiser_imageBOUTON(&IMAGE_BTN1,0,252,1112,200,"newgame.png");
     initialiser_imageBOUTON(&IMAGE_BTN2,0,204,112,200,"Settings.png");
     initialiser_imageBOUTON(&IMAGE_BTN3,0,160,112,200,"Credits.png");

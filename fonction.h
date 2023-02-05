@@ -28,14 +28,6 @@ typedef struct {
 //fonctions image*
 void initialiser_imageBACK(image *imge);
 void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name);
-void initialiser_imageBOUTON1(image *imge);
-void initialiser_imageBOUTON2(image *imge);
-void initialiser_imageBOUTON3(image *imge);
-void initialiser_imageBOUTON4(image *imge);
-void initialiser_imageBOUTON1_alt(image *imge);
-void initialiser_imageBOUTON2_alt(image *imge);
-void initialiser_imageBOUTON3_alt(image *imge);
-void initialiser_imageBOUTON4_alt(image *imge);
 void liberer_image(image imge);
 
 //fonctions audio
