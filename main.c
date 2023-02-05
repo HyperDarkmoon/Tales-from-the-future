@@ -56,6 +56,7 @@ int main(int argc, char const *argv[]) {
         else {
             afficher_imageBTN2(screen, IMAGE_BTN2_alt);
         }
+        
         // second loop, reads events
         while (SDL_PollEvent(&event)) {
             // different options for menu
@@ -65,8 +66,8 @@ int main(int argc, char const *argv[]) {
                 break;
             case SDL_MOUSEBUTTONDOWN: // mouse click
                 if (event.button.button == SDL_BUTTON_LEFT &&
-                    event.motion.y <= 300 && event.motion.y >= 250 &&
-                    event.motion.x <= 423 && event.motion.x >= 213) {
+                    event.motion.y <= SCREEN_H - 48 && event.motion.y >= SCREEN_H - 73 &&
+                    event.motion.x <= 98 && event.motion.x >= 25) {
                     boucle = 0;
                 }
                 // Mouse button clicks on specific regions, proceeds elsewhere
