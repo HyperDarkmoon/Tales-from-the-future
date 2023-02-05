@@ -35,3 +35,5 @@
 **Exit button now functional**
 
 **Added the rest of the button images to imgs**
+
+**Added the credits and settings buttons**
