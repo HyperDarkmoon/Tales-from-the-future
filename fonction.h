@@ -4,8 +4,8 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
-#define SCREEN_H 770
-#define SCREEN_W 1366
+#define SCREEN_H 1080
+#define SCREEN_W 1920
 
 //Structure image
 typedef struct {
@@ -34,6 +34,7 @@ void initialiser_imageBOUTON1_alt(image *imge);
 void initialiser_imageBOUTON2_alt(image *imge);
 void initialiser_imageBOUTON3_alt(image *imge);
 void initialiser_imageBOUTON4_alt(image *imge);
+void initialiser_imageSettings1(image *imge);
 void liberer_image(image imge);
 
 //fonctions audio

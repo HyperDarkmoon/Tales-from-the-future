@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
 {
     SDL_Surface *screen;
     image IMAGE, IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
-    image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
+    image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt,IMAGE_SETTINGS1;
     Mix_Music *music;
     Mix_Chunk *mus;
     texte txte;
@@ -47,6 +47,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON4(&IMAGE_BTN4);
     initialiser_imageBOUTON3_alt(&IMAGE_BTN3_alt);
     initialiser_imageBOUTON4_alt(&IMAGE_BTN4_alt);
+    initialiser_imageSettings1(&IMAGE_SETTINGS1);
     initialiser_audio(music);
     initialiser_texte(&txte);
 
@@ -167,6 +168,7 @@ int main(int argc, char const *argv[])
             break;
             case 1:
                 afficher_imageBMP(screen, IMAGE);
+                afficher_imageBTN(screen,IMAGE_SETTINGS1);
                 while(SDL_PollEvent(&event)) {
                     switch(event.type) {
                         case SDL_QUIT:
@@ -176,7 +178,7 @@ int main(int argc, char const *argv[])
                             if (event.key.keysym.sym == SDLK_ESCAPE) {
                                 menu = 0;
                             }
-                            if (event.key.keysym.sym == SDLK_f) {
+                            /*if (event.key.keysym.sym == SDLK_f) {
                                 if (fullscreen == 0) {
                                     screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_FULLSCREEN | SDL_DOUBLEBUF);
                                     fullscreen = 1;
@@ -188,7 +190,7 @@ int main(int argc, char const *argv[])
                                     SDL_Flip(screen);
                                 }
                             }
-                            break;
+                            break;*/
                     }
                 }
             SDL_Flip(screen);

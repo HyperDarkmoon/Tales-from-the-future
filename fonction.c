@@ -7,7 +7,7 @@
 // Initializes background image
 void initialiser_imageBACK(image *imge)
 {
-    imge->url = ("imgs/final.bmp");
+    imge->url = ("imgs/newgame.bmp");
     imge->img = SDL_LoadBMP(imge->url);
     if (imge->img == NULL)
     {
