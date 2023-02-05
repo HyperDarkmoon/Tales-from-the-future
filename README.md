@@ -37,3 +37,7 @@
 **Added the rest of the button images to imgs**
 
 **Added the credits and settings buttons**
+
+**Added Settings menu with placeholder buttons for back and fullscreen**
+
+**Working on fullscreen mode**
