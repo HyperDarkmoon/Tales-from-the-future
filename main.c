@@ -10,6 +10,7 @@
 int main(int argc, char const *argv[]) {
     SDL_Surface *screen;
     image IMAGE, IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
+    image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
     Mix_Music *music;
     Mix_Chunk *mus;
     texte txte;
@@ -23,6 +24,8 @@ int main(int argc, char const *argv[]) {
     int buttonOneHovered = 0; // 0 = normal, 1 = hovered (for button one)
                            // Initialization, if it fails program exits
     int buttonTwoHovered = 0; //same as button One but for button two
+    int buttonThreeHovered = 0; 
+    int buttonFourHovered = 0; 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) == -1) {
         printf("Could not initialize SDL: %s.\n", SDL_GetError());
         return -1;
@@ -35,6 +38,10 @@ int main(int argc, char const *argv[]) {
     initialiser_imageBOUTON2(&IMAGE_BTN2);
     initialiser_imageBOUTON1_alt(&IMAGE_BTN1_alt);
     initialiser_imageBOUTON2_alt(&IMAGE_BTN2_alt);
+    initialiser_imageBOUTON3(&IMAGE_BTN3);
+    initialiser_imageBOUTON4(&IMAGE_BTN4);
+    initialiser_imageBOUTON3_alt(&IMAGE_BTN3_alt);
+    initialiser_imageBOUTON4_alt(&IMAGE_BTN4_alt);
     initialiser_audio(music);
     initialiser_texte(&txte);
 
@@ -45,16 +52,28 @@ int main(int argc, char const *argv[]) {
         afficher_imageBMP(screen, IMAGE);
         afficher_texte(screen, txte);
         if (buttonOneHovered == 0) {
-            afficher_imageBTN1(screen, IMAGE_BTN1);
+            afficher_imageBTN(screen, IMAGE_BTN1);
         }
         else {
-            afficher_imageBTN1(screen, IMAGE_BTN1_alt);
+            afficher_imageBTN(screen, IMAGE_BTN1_alt);
         }
         if (buttonTwoHovered == 0) {
-            afficher_imageBTN2(screen, IMAGE_BTN2);
+            afficher_imageBTN(screen, IMAGE_BTN2);
         }
         else {
-            afficher_imageBTN2(screen, IMAGE_BTN2_alt);
+            afficher_imageBTN(screen, IMAGE_BTN2_alt);
+        }
+        if (buttonThreeHovered == 0) {
+            afficher_imageBTN(screen, IMAGE_BTN3);
+        }
+        else {
+            afficher_imageBTN(screen, IMAGE_BTN3_alt);
+        }
+        if (buttonFourHovered == 0) {
+            afficher_imageBTN(screen, IMAGE_BTN4);
+        }
+        else {
+            afficher_imageBTN(screen, IMAGE_BTN4_alt);
         }
         
         // second loop, reads events
@@ -75,21 +94,37 @@ int main(int argc, char const *argv[]) {
             case SDL_MOUSEMOTION: // mouse moving
                 mouseX = event.motion.x;
                 mouseY = event.motion.y;
-                if (event.motion.y <= SCREEN_H - 98 &&
-                    event.motion.y >= SCREEN_H - 112 &&
+                if (event.motion.y <= SCREEN_H - 189 &&
+                    event.motion.y >= SCREEN_H - 195 &&
                     event.motion.x <= 175 && event.motion.x >= 20) {
                     buttonOneHovered = 1;
                 }
                 else {
                     buttonOneHovered = 0;
                 }
-                 if (event.motion.y <= SCREEN_H - 48 &&
-                    event.motion.y >= SCREEN_H - 73 &&
-                    event.motion.x <= 98 && event.motion.x >= 25) {
+                if (event.motion.y <= SCREEN_H - 132 &&
+                    event.motion.y >= SCREEN_H - 152 &&
+                    event.motion.x <= 175 && event.motion.x >= 20) {
                     buttonTwoHovered = 1;
                 }
                 else {
                     buttonTwoHovered = 0;
+                }
+                if (event.motion.y <= SCREEN_H - 98 &&
+                    event.motion.y >= SCREEN_H - 112 &&
+                    event.motion.x <= 175 && event.motion.x >= 20) {
+                    buttonThreeHovered = 1;
+                }
+                else {
+                    buttonThreeHovered = 0;
+                }
+                 if (event.motion.y <= SCREEN_H - 48 &&
+                    event.motion.y >= SCREEN_H - 73 &&
+                    event.motion.x <= 98 && event.motion.x >= 25) {
+                    buttonFourHovered = 1;
+                }
+                else {
+                    buttonFourHovered = 0;
                 }
                 // mouse hovers over specific regions, plays sound
                 break;
@@ -102,7 +137,12 @@ int main(int argc, char const *argv[]) {
     liberer_image(IMAGE);
     liberer_image(IMAGE_BTN1);
     liberer_image(IMAGE_BTN2);
-
+    liberer_image(IMAGE_BTN3);
+    liberer_image(IMAGE_BTN4);
+    liberer_image(IMAGE_BTN1_alt);
+    liberer_image(IMAGE_BTN2_alt);
+    liberer_image(IMAGE_BTN3_alt);
+    liberer_image(IMAGE_BTN4_alt);
     liberer_musique(music);
     //liberer_musiquebref(mus);
 

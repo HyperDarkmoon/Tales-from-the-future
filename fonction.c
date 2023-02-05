@@ -33,16 +33,33 @@ void initialiser_imageBOUTON1(image *imge)
         return;
     }
     imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = SCREEN_H - 160;
+    imge->pos_img_ecran.y = SCREEN_H - 252;
     imge->pos_img_affiche.w = 200;
     imge->pos_img_affiche.h = 112;
     imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = SCREEN_H - 160;
+    imge->pos_img_affiche.y = SCREEN_H - 252;
 }
 
-void initialiser_imageBOUTON1_alt(image *imge)
+void initialiser_imageBOUTON2(image *imge)
 {
-    imge->url = ("imgs/newgame_alt.png"); // newgame.png
+    imge->url = ("imgs/Settings.png"); // newgame.png
+    imge->img = IMG_Load(imge->url);
+    if (imge->img == NULL)
+    {
+        printf("unable to load background image %s \n", SDL_GetError());
+        return;
+    }
+    imge->pos_img_ecran.x = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 204;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
+    imge->pos_img_affiche.x = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 204;
+}
+
+void initialiser_imageBOUTON3(image *imge)
+{
+    imge->url = ("imgs/Credits.png"); // newgame.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -58,7 +75,7 @@ void initialiser_imageBOUTON1_alt(image *imge)
 }
 
 // Initializes the image for the second button
-void initialiser_imageBOUTON2(image *imge)
+void initialiser_imageBOUTON4(image *imge)
 {
     imge->url = ("imgs/quit.png"); // quit.png
     imge->img = IMG_Load(imge->url);
@@ -75,7 +92,58 @@ void initialiser_imageBOUTON2(image *imge)
     imge->pos_img_affiche.y = SCREEN_H - 112;
 }
 
+void initialiser_imageBOUTON1_alt(image *imge)
+{
+    imge->url = ("imgs/newgame_alt.png"); // newgame.png
+    imge->img = IMG_Load(imge->url);
+    if (imge->img == NULL)
+    {
+        printf("unable to load background image %s \n", SDL_GetError());
+        return;
+    }
+    imge->pos_img_ecran.x = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 252;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
+    imge->pos_img_affiche.x = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 252;
+}
+
 void initialiser_imageBOUTON2_alt(image *imge)
+{
+    imge->url = ("imgs/Settingsalt.png"); // newgame.png
+    imge->img = IMG_Load(imge->url);
+    if (imge->img == NULL)
+    {
+        printf("unable to load background image %s \n", SDL_GetError());
+        return;
+    }
+    imge->pos_img_ecran.x = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 204;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
+    imge->pos_img_affiche.x = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 204;
+}
+
+void initialiser_imageBOUTON3_alt(image *imge)
+{
+    imge->url = ("imgs/Creditsalt.png"); // newgame.png
+    imge->img = IMG_Load(imge->url);
+    if (imge->img == NULL)
+    {
+        printf("unable to load background image %s \n", SDL_GetError());
+        return;
+    }
+    imge->pos_img_ecran.x = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 160;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
+    imge->pos_img_affiche.x = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 160;
+}
+
+void initialiser_imageBOUTON4_alt(image *imge)
 {
     //Looks for the image in the subfolder then initializes it
     imge->url = ("imgs/exitalt.png"); // exitalt.png
@@ -85,12 +153,12 @@ void initialiser_imageBOUTON2_alt(image *imge)
         printf("unable to load background image %s \n", SDL_GetError());
         return;
     }
-    imge->pos_img_ecran.x = 25;
-    imge->pos_img_ecran.y = SCREEN_H - 73;
+    imge->pos_img_ecran.x = 0;
+    imge->pos_img_ecran.y = SCREEN_H - 112;
     imge->pos_img_affiche.w = 200;
     imge->pos_img_affiche.h = 112;
-    imge->pos_img_affiche.x = 25;
-    imge->pos_img_affiche.y = SCREEN_H - 73;
+    imge->pos_img_affiche.x = 0;
+    imge->pos_img_affiche.y = SCREEN_H - 112;
 }
 
 // Prints BMP image
@@ -100,13 +168,7 @@ void afficher_imageBMP(SDL_Surface *screen, image imge)
 }
 
 // Prints first button
-void afficher_imageBTN1(SDL_Surface *screen, image imge)
-{
-    SDL_BlitSurface(imge.img, NULL, screen, &imge.pos_img_ecran);
-}
-
-// Prints second button
-void afficher_imageBTN2(SDL_Surface *screen, image imge)
+void afficher_imageBTN(SDL_Surface *screen, image imge)
 {
     SDL_BlitSurface(imge.img, NULL, screen, &imge.pos_img_ecran);
 }

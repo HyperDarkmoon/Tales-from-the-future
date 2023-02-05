@@ -28,8 +28,12 @@ typedef struct {
 void initialiser_imageBACK(image *imge);
 void initialiser_imageBOUTON1(image *imge);
 void initialiser_imageBOUTON2(image *imge);
+void initialiser_imageBOUTON3(image *imge);
+void initialiser_imageBOUTON4(image *imge);
 void initialiser_imageBOUTON1_alt(image *imge);
 void initialiser_imageBOUTON2_alt(image *imge);
+void initialiser_imageBOUTON3_alt(image *imge);
+void initialiser_imageBOUTON4_alt(image *imge);
 void liberer_image(image imge);
 
 //fonctions audio
@@ -45,9 +49,8 @@ void liberer_texte(texte txte);
 
 //fonctions d'affichage
 void afficher_imageBMP(SDL_Surface *screen,image imge);
-void afficher_imageBTN1(SDL_Surface *screen,image imge);
-void afficher_imageBTN1_alt(SDL_Surface *screen,image imge);
-void afficher_imageBTN2(SDL_Surface *screen,image imge);
+void afficher_imageBTN(SDL_Surface *screen,image imge);
+
 
 
 
