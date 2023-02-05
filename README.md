@@ -1,6 +1,7 @@
 # Tales from the future
  Game project for class
 
+*Note to self: Free music might have a bug*
 
 # Changelog
 
@@ -24,3 +25,9 @@
 **Placed buttons correctly**
 
 **Added hover effect over buttons**
+
+## 05/02/2023
+
+**Added Hover effect on the Exit button**
+
+**Added a function to see mouse positioning in real time, will help with future codes**

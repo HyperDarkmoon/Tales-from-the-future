@@ -118,6 +118,34 @@ void initialiser_imageBOUTON2(image *imge)
     imge->pos_img_affiche.y = SCREEN_H - 112;
 }
 
+void initialiser_imageBOUTON2_alt(image *imge)
+{
+    //Looks for the image in the subfolder then initializes it
+    char subfolder_path[256];
+    FILE *fp = fopen("config.txt", "r");
+    if (fp == NULL)
+    {
+        printf("unable to open config file\n");
+        return;
+    }
+    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
+    fclose(fp);
+    strcat(subfolder_path, "/exitalt.png");
+    imge->url = subfolder_path; // newgame.png
+    imge->img = IMG_Load(imge->url);
+    if (imge->img == NULL)
+    {
+        printf("unable to load background image %s \n", SDL_GetError());
+        return;
+    }
+    imge->pos_img_ecran.x = 25;
+    imge->pos_img_ecran.y = SCREEN_H - 73;
+    imge->pos_img_affiche.w = 200;
+    imge->pos_img_affiche.h = 112;
+    imge->pos_img_affiche.x = 25;
+    imge->pos_img_affiche.y = SCREEN_H - 73;
+}
+
 // Prints BMP image
 void afficher_imageBMP(SDL_Surface *screen, image imge)
 {
@@ -214,4 +242,21 @@ void liberer_texte(texte txte)
 {
     TTF_CloseFont(txte.police);
     TTF_Quit;
+}
+
+
+
+//THIS FUNCTION WILL HELP DETERMINE PIXEL POSITIONS
+
+void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y) {
+  char text[32];
+  sprintf(text, "Mouse at %d, %d", x, y);
+  text[31]='\0';
+  SDL_Color textColor = { 255, 255, 255 };
+  SDL_Surface *message = TTF_RenderText_Solid(font, text, textColor);
+  SDL_Rect messageRect;
+  messageRect.x = 10;
+  messageRect.y = 10;
+  SDL_BlitSurface(message, NULL, screen, &messageRect);
+  SDL_FreeSurface(message);
 }
