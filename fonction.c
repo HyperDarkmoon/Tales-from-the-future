@@ -7,18 +7,7 @@
 // Initializes background image
 void initialiser_imageBACK(image *imge)
 {
-    //Looks for the image in the subfolder then initializes it
-    char subfolder_path[256];
-    FILE *fp = fopen("config.txt", "r");
-    if (fp == NULL)
-    {
-        printf("unable to open config file\n");
-        return;
-    }
-    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
-    fclose(fp);
-    strcat(subfolder_path, "/final.bmp");
-    imge->url = subfolder_path;
+    imge->url = ("imgs/final.bmp");
     imge->img = SDL_LoadBMP(imge->url);
     if (imge->img == NULL)
     {
@@ -36,18 +25,7 @@ void initialiser_imageBACK(image *imge)
 // Initializes the image for the first button
 void initialiser_imageBOUTON1(image *imge)
 {
-    //Looks for the image in the subfolder then initializes it
-    char subfolder_path[256];
-    FILE *fp = fopen("config.txt", "r");
-    if (fp == NULL)
-    {
-        printf("unable to open config file\n");
-        return;
-    }
-    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
-    fclose(fp);
-    strcat(subfolder_path, "/newgame.png");
-    imge->url = subfolder_path; // newgame.png
+    imge->url = ("imgs/newgame.png"); // newgame.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -64,18 +42,7 @@ void initialiser_imageBOUTON1(image *imge)
 
 void initialiser_imageBOUTON1_alt(image *imge)
 {
-    //Looks for the image in the subfolder then initializes it
-    char subfolder_path[256];
-    FILE *fp = fopen("config.txt", "r");
-    if (fp == NULL)
-    {
-        printf("unable to open config file\n");
-        return;
-    }
-    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
-    fclose(fp);
-    strcat(subfolder_path, "/newgame_alt.png");
-    imge->url = subfolder_path; // newgame.png
+    imge->url = ("imgs/newgame_alt.png"); // newgame.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -93,17 +60,7 @@ void initialiser_imageBOUTON1_alt(image *imge)
 // Initializes the image for the second button
 void initialiser_imageBOUTON2(image *imge)
 {
-    char subfolder_path[256];
-    FILE *fp = fopen("config.txt", "r");
-    if (fp == NULL)
-    {
-        printf("unable to open config file\n");
-        return;
-    }
-    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
-    fclose(fp);
-    strcat(subfolder_path, "/quit.png");
-    imge->url = subfolder_path; // quit.png
+    imge->url = ("imgs/quit.png"); // quit.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -121,17 +78,7 @@ void initialiser_imageBOUTON2(image *imge)
 void initialiser_imageBOUTON2_alt(image *imge)
 {
     //Looks for the image in the subfolder then initializes it
-    char subfolder_path[256];
-    FILE *fp = fopen("config.txt", "r");
-    if (fp == NULL)
-    {
-        printf("unable to open config file\n");
-        return;
-    }
-    fscanf(fp, "MY_SUBFOLDER=%s\n", subfolder_path);
-    fclose(fp);
-    strcat(subfolder_path, "/exitalt.png");
-    imge->url = subfolder_path; // newgame.png
+    imge->url = ("imgs/exitalt.png"); // exitalt.png
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -177,7 +124,7 @@ void initialiser_audio(Mix_Music *music)
     {
         printf("%s", SDL_GetError());
     }
-    music = Mix_LoadMUS("Main_Menu_Msc.wav");
+    music = Mix_LoadMUS("game_sound/Main_Menu_Msc.wav");
     Mix_PlayMusic(music, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 3.5);
 }
@@ -207,24 +154,11 @@ void liberer_musiquebref(Mix_Chunk *music)
 // initializes text
 void initialiser_texte(texte *txte)
 {
-    /*char subfolder_path[256];
-    FILE *fp = fopen("config.txt", "r");
-    if (fp == NULL)
-    {
-        printf("unable to open config file\n");
-        return;
-    }
-    fscanf(fp, "MY_SUBFOLDER_FONTS=%s\n", subfolder_path);
-    fclose(fp);
-    printf("%s",subfolder_path);
-    strcat(subfolder_path, "/OpenSans-Bold.ttf");*/
-    //To be fixed
     TTF_Init();
-    txte->police = TTF_OpenFont("OpenSans-Bold.ttf", 100);
+    txte->police = TTF_OpenFont("OpenSans-Bold.ttf", 100); //keep in main folder for now
     txte->color_txt.r = 255;
     txte->color_txt.g = 209;
     txte->color_txt.b = 220;
-
     txte->pos_txt.x = 50;
     txte->pos_txt.y = 0;
 }
