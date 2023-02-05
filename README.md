@@ -31,4 +31,5 @@
 **Added Hover effect on the Exit button**
 
 **Added a function to see mouse positioning in real time, will help with future codes**
+
 **Exit button now functional**

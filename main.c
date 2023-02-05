@@ -104,7 +104,7 @@ int main(int argc, char const *argv[]) {
     liberer_image(IMAGE_BTN2);
 
     liberer_musique(music);
-    liberer_musiquebref(mus);
+    //liberer_musiquebref(mus);
 
     liberer_texte(txte);
 
