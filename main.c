@@ -11,8 +11,9 @@
 int main(int argc, char const *argv[])
 {
     SDL_Surface *screen;
-    image IMAGE, IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
+    image IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
     image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
+    image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8; 
     image IMAGElevelOne;
     Mix_Music *music;
     Mix_Chunk *mus;
@@ -42,7 +43,6 @@ int main(int argc, char const *argv[])
     // initialization function calls
     char buttonOne[25],buttonOneAlt[25],buttonTwo[25],buttonTwoAlt[25],buttonThree[25],buttonThreeAlt[25],buttonFour[25],buttonFourAlt[25];
 
-    initialiser_imageBACK(&IMAGE);
     //Calling for the following function should include the image variable, x,y,h,w, and the image name
     initialiser_imageBOUTON(&IMAGE_BTN1,0,252,1112,200,"newgame.png");
     initialiser_imageBOUTON(&IMAGE_BTN2,0,204,112,200,"Settings.png");
@@ -52,6 +52,14 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&IMAGE_BTN2_alt,0,204,112,200,"Settingsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN3_alt,0,160,112,200,"Creditsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN4_alt,0,112,112,200,"exitalt.png");
+    initialiser_imageBACK(&IMAGE1,"bg1.png");
+    initialiser_imageBACK(&IMAGE2,"bg2.png");
+    initialiser_imageBACK(&IMAGE3,"bg3.png");
+    initialiser_imageBACK(&IMAGE4,"bg4.png");
+    initialiser_imageBACK(&IMAGE5,"bg5.png");
+    initialiser_imageBACK(&IMAGE6,"bg6.png");
+    initialiser_imageBACK(&IMAGE7,"bg7.png");
+    initialiser_imageBACK(&IMAGE8,"bg8.png");
     initialiser_levelOne(&IMAGElevelOne);
     //initialiser_audio(music);
     initialiser_texte(&txte);
@@ -62,12 +70,20 @@ int main(int argc, char const *argv[])
         switch (menu) //Switch controls screen printings
         {
         case 0:
+            afficher_imageBMP(screen, IMAGE1);
             //PrintMousePosition(screen, font, mouseX, mouseY); //These two lines show mouse positioning, commment if not needed
             //SDL_UpdateRect(screen, 0, 0, 0, 0); //Line two
             if (Mix_PlayingMusic() == 0) {
                 initialiser_audio(music);
             }
-            afficher_imageBMP(screen, IMAGE);
+            /*afficher_imageBMP(screen, IMAGE2);
+            afficher_imageBMP(screen, IMAGE3);
+            afficher_imageBMP(screen, IMAGE4);
+            afficher_imageBMP(screen, IMAGE5);
+            afficher_imageBMP(screen, IMAGE6);
+            afficher_imageBMP(screen, IMAGE7);
+            afficher_imageBMP(screen, IMAGE8);*/
+
             afficher_texte(screen, txte);
             if (buttonOneHovered == 0)
             {
@@ -218,7 +234,7 @@ int main(int argc, char const *argv[])
                 SDL_Flip(screen);
             break;
             case 2:
-                afficher_imageBMP(screen, IMAGE);
+                afficher_imageBMP(screen, IMAGE1);
                 while(SDL_PollEvent(&event)) {
                     switch(event.type) {
                         case SDL_QUIT:
@@ -251,7 +267,14 @@ int main(int argc, char const *argv[])
     }
 
     // free functions
-    liberer_image(IMAGE);
+    liberer_image(IMAGE1);
+    /*liberer_image(IMAGE2);
+    liberer_image(IMAGE3);
+    liberer_image(IMAGE4);
+    liberer_image(IMAGE5);
+    liberer_image(IMAGE6);
+    liberer_image(IMAGE7);
+    liberer_image(IMAGE8);*/
     liberer_image(IMAGE_BTN1);
     liberer_image(IMAGE_BTN2);
     liberer_image(IMAGE_BTN3);

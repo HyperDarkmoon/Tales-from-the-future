@@ -5,10 +5,13 @@
 #include "fonction.h"
 
 // Initializes background image
-void initialiser_imageBACK(image *imge)
+void initialiser_imageBACK(image *imge,char* name)
 {
-    imge->url = ("imgs/final.bmp");
-    imge->img = SDL_LoadBMP(imge->url);
+    char link[50];
+    strcpy(link,"imgs/");
+    strcat(link,name);
+    imge->url = (link);
+    imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
         printf("unable to load background image %s \n", SDL_GetError());
@@ -24,7 +27,7 @@ void initialiser_imageBACK(image *imge)
 
 void initialiser_levelOne(image *imge)
 {
-    imge->url = ("imgs/level1.jpg");
+    imge->url = ("bgimgs/level1.jpg");
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {

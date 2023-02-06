@@ -26,7 +26,7 @@ typedef struct {
 
 
 //fonctions image*
-void initialiser_imageBACK(image *imge);
+void initialiser_imageBACK(image *imge,char* name);
 void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name);
 void initialiser_levelOne(image *imge);
 void liberer_image(image imge);
