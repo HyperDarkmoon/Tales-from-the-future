@@ -28,12 +28,13 @@ typedef struct {
 //fonctions image*
 void initialiser_imageBACK(image *imge);
 void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name);
+void initialiser_levelOne(image *imge);
 void liberer_image(image imge);
 
 //fonctions audio
 void initialiser_audio(Mix_Music *music);
 void liberer_musique(Mix_Music *music);
-void initialiser_audiobref(Mix_Chunk *music);
+void initialiser_audiobref(Mix_Chunk *music,char* filename);
 void liberer_musiquebref(Mix_Chunk *music);
 
 //fonctions texte

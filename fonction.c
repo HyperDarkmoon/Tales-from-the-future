@@ -22,10 +22,27 @@ void initialiser_imageBACK(image *imge)
     imge->pos_img_affiche.w = SCREEN_W;
 }
 
+void initialiser_levelOne(image *imge)
+{
+    imge->url = ("imgs/level1.jpg");
+    imge->img = IMG_Load(imge->url);
+    if (imge->img == NULL)
+    {
+        printf("unable to load background image %s \n", SDL_GetError());
+        return;
+    }
+    imge->pos_img_ecran.x = 0;
+    imge->pos_img_ecran.y = 0;
+    imge->pos_img_affiche.x = 0;
+    imge->pos_img_affiche.y = 0;
+    imge->pos_img_affiche.h = SCREEN_H;
+    imge->pos_img_affiche.w = SCREEN_W;
+}
+
 // Initializes All the buttons per parameter
 void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name)
 {
-    char link[25];
+    char link[50];
     strcpy(link,"imgs/");
     strcat(link,name);
     imge->url = (link); 
@@ -80,10 +97,13 @@ void liberer_musique(Mix_Music *music)
 }
 
 // Initializes sound effects
-void initialiser_audiobref(Mix_Chunk *music)
+void initialiser_audiobref(Mix_Chunk *music,char* filename)
 {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-    music = Mix_LoadWAV("simple.wav");
+    char link[50];
+    strcpy(link,"game_sound/");
+    strcat(link,filename);
+    music = Mix_LoadWAV(link);
     Mix_PlayChannel(-1, music, 0);
     if (music == NULL)
         printf("%s", SDL_GetError());
