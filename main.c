@@ -63,27 +63,56 @@ int main(int argc, char const *argv[])
     initialiser_levelOne(&IMAGElevelOne);
     //initialiser_audio(music);
     initialiser_texte(&txte);
-
+    int frame = 0;
     // main loop
     while (boucle)
     {
         switch (menu) //Switch controls screen printings
         {
         case 0:
-            afficher_imageBMP(screen, IMAGE1);
             //PrintMousePosition(screen, font, mouseX, mouseY); //These two lines show mouse positioning, commment if not needed
             //SDL_UpdateRect(screen, 0, 0, 0, 0); //Line two
             if (Mix_PlayingMusic() == 0) {
                 initialiser_audio(music);
             }
-            /*afficher_imageBMP(screen, IMAGE2);
-            afficher_imageBMP(screen, IMAGE3);
-            afficher_imageBMP(screen, IMAGE4);
-            afficher_imageBMP(screen, IMAGE5);
-            afficher_imageBMP(screen, IMAGE6);
-            afficher_imageBMP(screen, IMAGE7);
-            afficher_imageBMP(screen, IMAGE8);*/
-
+            if (frame==9) {
+                frame=0;
+            }
+            switch(frame) {
+                case 1:
+                    afficher_imageBMP(screen, IMAGE2);
+                    SDL_Delay(100);
+                    break;
+                case 2:
+                    afficher_imageBMP(screen, IMAGE3);
+                    SDL_Delay(100);
+                    break;
+                case 3:
+                    afficher_imageBMP(screen, IMAGE1);
+                    SDL_Delay(100);
+                    break;
+                case 4:
+                    afficher_imageBMP(screen, IMAGE4);
+                    SDL_Delay(100);
+                    break;
+                case 5:
+                    afficher_imageBMP(screen, IMAGE5);
+                    SDL_Delay(100);
+                    break;
+                case 6:
+                    afficher_imageBMP(screen, IMAGE6);
+                    SDL_Delay(100);
+                    break;
+                case 7:
+                    afficher_imageBMP(screen, IMAGE7);
+                    SDL_Delay(100);
+                    break;
+                case 8:
+                    afficher_imageBMP(screen, IMAGE8);
+                    SDL_Delay(100);
+                    break;
+            }
+            frame++;
             afficher_texte(screen, txte);
             if (buttonOneHovered == 0)
             {
@@ -268,13 +297,13 @@ int main(int argc, char const *argv[])
 
     // free functions
     liberer_image(IMAGE1);
-    /*liberer_image(IMAGE2);
+    liberer_image(IMAGE2);
     liberer_image(IMAGE3);
     liberer_image(IMAGE4);
     liberer_image(IMAGE5);
     liberer_image(IMAGE6);
     liberer_image(IMAGE7);
-    liberer_image(IMAGE8);*/
+    liberer_image(IMAGE8);
     liberer_image(IMAGE_BTN1);
     liberer_image(IMAGE_BTN2);
     liberer_image(IMAGE_BTN3);
