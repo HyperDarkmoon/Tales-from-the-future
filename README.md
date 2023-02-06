@@ -43,3 +43,9 @@
 **Working on fullscreen mode**
 
 **Made all the initializeButton functions into the same one**
+
+## 06/02/2023
+
+**Added Level One background and Window**
+
+**Added sound effects to buttons**
