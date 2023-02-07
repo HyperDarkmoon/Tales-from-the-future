@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     SDL_Surface *screen;
     image IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
     image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
-    image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8; 
+    image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8,IMGCREDITS; 
     image IMAGElevelOne;
     Mix_Music *music;
     Mix_Chunk *mus;
@@ -60,6 +60,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBACK(&IMAGE6,"bg6.png");
     initialiser_imageBACK(&IMAGE7,"bg7.png");
     initialiser_imageBACK(&IMAGE8,"bg8.png");
+    initialiser_imageBACK(&IMGCREDITS,"credits.png");
     initialiser_levelOne(&IMAGElevelOne);
     //initialiser_audio(music);
     initialiser_texte(&txte);
@@ -173,6 +174,11 @@ int main(int argc, char const *argv[])
                         event.motion.x <= 175 && event.motion.x >= 20) {
                             menu = 2;
                     }
+                    if (event.motion.y <= SCREEN_H - 98 &&
+                        event.motion.y >= SCREEN_H - 112 &&
+                        event.motion.x <= 175 && event.motion.x >= 20){
+                            menu = 3;
+                        }
                     // Mouse button clicks on specific regions, proceeds elsewhere
                     break;
                 case SDL_MOUSEMOTION: // mouse moving
@@ -289,6 +295,24 @@ int main(int argc, char const *argv[])
                             }
                             break;
                     }
+                case 3:
+                Mix_CloseAudio();
+                afficher_imageBMP(screen,IMGCREDITS);
+                while(SDL_PollEvent(&event)) {
+                    switch(event.type) {
+                        case SDL_QUIT:
+                            boucle = 0;
+                            break;
+                        case SDL_KEYDOWN:
+                            switch(event.key.keysym.sym) {
+                                case(SDLK_ESCAPE): 
+                                    menu = 0;
+                                    break;
+                            }
+                    }
+                }
+                SDL_Flip(screen);
+                break;
                 }
             SDL_Flip(screen);
             break;
@@ -312,6 +336,7 @@ int main(int argc, char const *argv[])
     liberer_image(IMAGE_BTN2_alt);
     liberer_image(IMAGE_BTN3_alt);
     liberer_image(IMAGE_BTN4_alt);
+    liberer_image(IMGCREDITS);
     //liberer_musique(music);
     //liberer_musiquebref(mus);
 
