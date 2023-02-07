@@ -53,3 +53,5 @@
 ## 07/02/2023
 
 **Functionning animated background**
+
+**Added Credits scene**
