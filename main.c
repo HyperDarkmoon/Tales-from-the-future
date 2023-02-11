@@ -11,6 +11,8 @@
 int main(int argc, char const *argv[])
 {
     SDL_Surface *screen;
+    int frame = 0;
+    int volume = MIX_MAX_VOLUME - 76;
     image IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
     image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
     image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMGCREDITS;
@@ -20,13 +22,14 @@ int main(int argc, char const *argv[])
     texte txte;
     SDL_Event event;
     TTF_Font *font;
+    int channel;
     TTF_Init();
     font = TTF_OpenFont("OpenSans-Bold.ttf", 100);
     int menu = 0;
     int mouseX = 0;
     int mouseY = 0;
     int boucle = 1;
-    int sfxPlayed;
+    int sfxPlayedOne = 0, sfxPlayedTwo = 0, sfxPlayedThree = 0, sfxPlayedFour = 0;
     int buttonOneHovered = 0; // 0 = normal, 1 = hovered (for button one)
                               // Initialization, if it fails program exits
     int buttonTwoHovered = 0; // same as button One but for button two
@@ -64,7 +67,6 @@ int main(int argc, char const *argv[])
     initialiser_levelOne(&IMAGElevelOne);
     // initialiser_audio(music);
     initialiser_texte(&txte);
-    int frame = 0;
     // main loop
     while (boucle)
     {
@@ -195,15 +197,15 @@ int main(int argc, char const *argv[])
                         event.motion.x <= 175 && event.motion.x >= 20)
                     {
                         buttonOneHovered = 1;
-                        if (sfxPlayed == 0)
+                        if (sfxPlayedOne == 0)
                         {
-                            initialiser_audiobref(mus, "Hover.wav");
-                            sfxPlayed = 1;
+                            channel = initialiser_audiobref(mus, "Hover.wav");
+                            sfxPlayedOne = 1;
                         }
                     }
                     else
                     {
-                        sfxPlayed = 0;
+                        sfxPlayedOne = 0;
                         buttonOneHovered = 0;
                     }
                     if (event.motion.y <= SCREEN_H - 132 &&
@@ -211,15 +213,15 @@ int main(int argc, char const *argv[])
                         event.motion.x <= 175 && event.motion.x >= 20)
                     {
                         buttonTwoHovered = 1;
-                        if (sfxPlayed == 0)
+                        if (sfxPlayedTwo == 0)
                         {
-                            initialiser_audiobref(mus, "Hover.wav");
-                            sfxPlayed = 1;
+                            channel = initialiser_audiobref(mus, "Hover.wav");
+                            sfxPlayedTwo = 1;
                         }
                     }
                     else
                     {
-                        sfxPlayed = 0;
+                        sfxPlayedTwo = 0;
                         buttonTwoHovered = 0;
                     }
                     if (event.motion.y <= SCREEN_H - 98 &&
@@ -227,15 +229,15 @@ int main(int argc, char const *argv[])
                         event.motion.x <= 175 && event.motion.x >= 20)
                     {
                         buttonThreeHovered = 1;
-                        if (sfxPlayed == 0)
+                        if (sfxPlayedThree == 0)
                         {
-                            initialiser_audiobref(mus, "Hover.wav");
-                            sfxPlayed = 1;
+                            channel = initialiser_audiobref(mus, "Hover.wav");
+                            sfxPlayedThree = 1;
                         }
                     }
                     else
                     {
-                        sfxPlayed = 0;
+                        sfxPlayedThree = 0;
                         buttonThreeHovered = 0;
                     }
                     if (event.motion.y <= SCREEN_H - 48 &&
@@ -243,15 +245,15 @@ int main(int argc, char const *argv[])
                         event.motion.x <= 98 && event.motion.x >= 25)
                     {
                         buttonFourHovered = 1;
-                        if (sfxPlayed == 0)
+                        if (sfxPlayedFour == 0)
                         {
-                            initialiser_audiobref(mus, "Hover.wav");
-                            sfxPlayed = 1;
+                            channel = initialiser_audiobref(mus, "Hover.wav");
+                            sfxPlayedFour = 1;
                         }
                     }
                     else
                     {
-                        sfxPlayed = 0;
+                        sfxPlayedFour = 0;
                         buttonFourHovered = 0;
                     }
                     // mouse hovers over specific regions, plays sound
@@ -310,12 +312,18 @@ int main(int argc, char const *argv[])
                             SDL_Flip(screen);
                         }
                         break;
-                    }
+                    
+                    case (SDLK_b):
+                        increaseVolume(&volume);
                     break;
+                    case (SDLK_n):
+                        decreaseVolume(&volume);
+                    break;
+                    }
                 }
             }
-        SDL_Flip(screen);
-        break;
+            SDL_Flip(screen);
+            break;
         case 3:
             Mix_CloseAudio();
             afficher_imageBMP(screen, IMGCREDITS);
@@ -337,8 +345,8 @@ int main(int argc, char const *argv[])
             }
             SDL_Flip(screen);
             break;
-        SDL_Flip(screen);
-        break;
+            SDL_Flip(screen);
+            break;
         }
     }
 

@@ -34,8 +34,10 @@ void liberer_image(image imge);
 //fonctions audio
 void initialiser_audio(Mix_Music *music);
 void liberer_musique(Mix_Music *music);
-void initialiser_audiobref(Mix_Chunk *music,char* filename);
+int initialiser_audiobref(Mix_Chunk *music,char* filename);
 void liberer_musiquebref(Mix_Chunk *music);
+void increaseVolume(int *volume);
+void decreaseVolume(int *volume);
 
 //fonctions texte
 void initialiser_texte(texte *txte);
