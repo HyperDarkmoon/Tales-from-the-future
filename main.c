@@ -19,6 +19,7 @@ int main(int argc, char const *argv[])
     image IMAGElevelOne;
     image IMAGESETTINGSVOLUME;
     image sndButton[5];
+    image sndCtrlButton[4];
     Mix_Music *music;
     Mix_Chunk *mus;
     texte txte;
@@ -71,6 +72,10 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&sndButton[2], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_2_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[3], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_3_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[4], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_4_delay-0.2s.png");
+    initialiser_imageBOUTON(&sndCtrlButton[0],SCREEN_H - 70, SCREEN_W - 966, 77, 160, "plus.png");
+    initialiser_imageBOUTON(&sndCtrlButton[1],SCREEN_H - 70, SCREEN_W - 966, 77, 160, "plusAlt.png");
+    initialiser_imageBOUTON(&sndCtrlButton[2],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minus.png");
+    initialiser_imageBOUTON(&sndCtrlButton[3],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minusAlt.png");
     initialiser_imageBACK(&IMGCREDITS, "credits.png");
     initialiser_levelOne(&IMAGElevelOne);
     // initialiser_audio(music);
@@ -294,6 +299,8 @@ int main(int argc, char const *argv[])
         case 2:
             afficher_imageBMP(screen, IMAGE1);
             afficher_imageBTN(screen, IMAGESETTINGSVOLUME);
+            afficher_imageBTN(screen, sndCtrlButton[0]);
+            afficher_imageBTN(screen, sndCtrlButton[2]);
             if (volume >= 0 && volume < 20)
             {
                 afficher_imageBTN(screen, sndButton[0]);
