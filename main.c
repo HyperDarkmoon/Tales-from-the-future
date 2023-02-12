@@ -38,13 +38,15 @@ int main(int argc, char const *argv[])
     int buttonTwoHovered = 0; // same as button One but for button two
     int buttonThreeHovered = 0;
     int buttonFourHovered = 0;
+    int volPlusHovered = 0;
+    int volMinusHovered = 0;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) == -1)
     {
         printf("Could not initialize SDL: %s.\n", SDL_GetError());
         return -1;
     }
     int fullscreen = 1;
-    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
 
     // initialization function calls
     char buttonOne[25], buttonOneAlt[25], buttonTwo[25], buttonTwoAlt[25], buttonThree[25], buttonThreeAlt[25], buttonFour[25], buttonFourAlt[25];
@@ -299,8 +301,10 @@ int main(int argc, char const *argv[])
         case 2:
             afficher_imageBMP(screen, IMAGE1);
             afficher_imageBTN(screen, IMAGESETTINGSVOLUME);
-            afficher_imageBTN(screen, sndCtrlButton[0]);
-            afficher_imageBTN(screen, sndCtrlButton[2]);
+            if (volPlusHovered == 0) afficher_imageBTN(screen, sndCtrlButton[0]);
+            else afficher_imageBTN(screen, sndCtrlButton[1]);
+            if (volMinusHovered == 0) afficher_imageBTN(screen, sndCtrlButton[2]);
+            else afficher_imageBTN(screen, sndCtrlButton[3]);
             if (volume >= 0 && volume < 20)
             {
                 afficher_imageBTN(screen, sndButton[0]);
@@ -335,9 +339,28 @@ int main(int argc, char const *argv[])
                     {
                         menu = 0;
                     }
+                    if (event.button.button == SDL_BUTTON_LEFT && event.motion.x>=SCREEN_H - 70 && event.motion.x<= SCREEN_H - 70+160 && 
+                    event.motion.y >= 375 && event.motion.y <= 450 )
+                    increaseVolume(&volume);
+
+                    if (event.button.button == SDL_BUTTON_LEFT && event.motion.x>=SCREEN_H + 100 && event.motion.x<= SCREEN_H + 100 +160 && 
+                    event.motion.y >= 375 && event.motion.y <= 450 )
+                    decreaseVolume(&volume);
+
                     break;
                 case SDL_QUIT:
                     boucle = 0;
+                    break;
+                case SDL_MOUSEMOTION:
+                    if (event.motion.x>=SCREEN_H - 70 && event.motion.x<= SCREEN_H - 70+160 && 
+                    event.motion.y >= 375 && event.motion.y <= 450 )
+                    volPlusHovered = 1;
+                    else volPlusHovered = 0;
+
+                    if (event.motion.x>=SCREEN_H + 100 && event.motion.x<= SCREEN_H + 100 +160 && 
+                    event.motion.y >= 375 && event.motion.y <= 450 )
+                    volMinusHovered = 1;
+                    else volMinusHovered = 0;
                     break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
