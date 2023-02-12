@@ -90,7 +90,7 @@ void initialiser_audio(Mix_Music *music)
     }
     music = Mix_LoadMUS("game_sound/Main_Menu_Msc.wav");
     Mix_PlayMusic(music, -1);
-    Mix_VolumeMusic(MIX_MAX_VOLUME - 96);
+    Mix_VolumeMusic(MIX_MAX_VOLUME - 58);
 }
 
 // frees music files from memory
@@ -164,23 +164,21 @@ void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y)
 
 void decreaseVolume(int* volume)
 {
-    *volume = *volume - 10;
+    *volume = *volume - 20;
     if (*volume < 0)
     {
         *volume = 0;
     }
     Mix_VolumeMusic(*volume);
-    printf("%d v1\n", *volume);
 }
 
 void increaseVolume(int* volume)
 {
-    *volume = *volume + 10;
-    if (*volume > MIX_MAX_VOLUME - 76)
+    *volume = *volume + 20;
+    if (*volume > MIX_MAX_VOLUME - 28)
     {
-        *volume = MIX_MAX_VOLUME - 76;
+        *volume = MIX_MAX_VOLUME - 28;
     }
     Mix_VolumeMusic(*volume);
-    printf("%d v2\n", *volume);
 }
 // test

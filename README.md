@@ -55,3 +55,9 @@
 **Functionning animated background**
 
 **Added Credits scene**
+
+## 12/02/2023
+
+**Added volume controls**
+**Added volume slider**
+**Added back button to settings**

@@ -18,6 +18,7 @@ int main(int argc, char const *argv[])
     image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMGCREDITS;
     image IMAGElevelOne;
     image IMAGESETTINGSVOLUME;
+    image sndButton[5];
     Mix_Music *music;
     Mix_Chunk *mus;
     texte txte;
@@ -56,7 +57,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&IMAGE_BTN2_alt, 0, 204, 112, 200, "Settingsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN3_alt, 0, 160, 112, 200, "Creditsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN4_alt, 0, 112, 112, 200, "exitalt.png");
-    initialiser_imageBOUTON(&IMAGESETTINGSVOLUME,0,SCREEN_H,112,200,"return.png");
+    initialiser_imageBOUTON(&IMAGESETTINGSVOLUME, 0, SCREEN_H, 112, 200, "return.png");
     initialiser_imageBACK(&IMAGE1, "bg1.png");
     initialiser_imageBACK(&IMAGE2, "bg2.png");
     initialiser_imageBACK(&IMAGE3, "bg3.png");
@@ -65,6 +66,11 @@ int main(int argc, char const *argv[])
     initialiser_imageBACK(&IMAGE6, "bg6.png");
     initialiser_imageBACK(&IMAGE7, "bg7.png");
     initialiser_imageBACK(&IMAGE8, "bg8.png");
+    initialiser_imageBOUTON(&sndButton[0], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_0_delay-0.2s.png");
+    initialiser_imageBOUTON(&sndButton[1], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_1_delay-0.2s.png");
+    initialiser_imageBOUTON(&sndButton[2], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_2_delay-0.2s.png");
+    initialiser_imageBOUTON(&sndButton[3], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_3_delay-0.2s.png");
+    initialiser_imageBOUTON(&sndButton[4], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_4_delay-0.2s.png");
     initialiser_imageBACK(&IMGCREDITS, "credits.png");
     initialiser_levelOne(&IMAGElevelOne);
     // initialiser_audio(music);
@@ -75,8 +81,8 @@ int main(int argc, char const *argv[])
         switch (menu) // Switch controls screen printings
         {
         case 0:
-            // PrintMousePosition(screen, font, mouseX, mouseY); //These two lines show mouse positioning, commment if not needed
-            // SDL_UpdateRect(screen, 0, 0, 0, 0); //Line two
+            //PrintMousePosition(screen, font, mouseX, mouseY); // These two lines show mouse positioning, commment if not needed
+            //SDL_UpdateRect(screen, 0, 0, 0, 0);               // Line two
             if (Mix_PlayingMusic() == 0)
             {
                 initialiser_audio(music);
@@ -287,11 +293,42 @@ int main(int argc, char const *argv[])
             break;
         case 2:
             afficher_imageBMP(screen, IMAGE1);
-            afficher_imageBTN(screen,IMAGESETTINGSVOLUME);
+            afficher_imageBTN(screen, IMAGESETTINGSVOLUME);
+            if (volume >= 0 && volume < 20)
+            {
+                afficher_imageBTN(screen, sndButton[0]);
+                SDL_Delay(200);
+            }
+            else if (volume >= 20 && volume < 40)
+            {
+                afficher_imageBTN(screen, sndButton[1]);
+                SDL_Delay(200);
+            }
+            else if (volume >= 40 && volume < 60)
+            {
+                afficher_imageBTN(screen, sndButton[2]);
+                SDL_Delay(200);
+            }
+            else if (volume >= 60 && volume < 80)
+            {
+                afficher_imageBTN(screen, sndButton[3]);
+                SDL_Delay(200);
+            }
+            else if (volume >= 80 && volume <= 100)
+            {
+                afficher_imageBTN(screen, sndButton[4]);
+                SDL_Delay(200);
+            }
             while (SDL_PollEvent(&event))
             {
                 switch (event.type)
                 {
+                case SDL_MOUSEBUTTONDOWN:
+                    if (event.button.button == SDL_BUTTON_LEFT && event.motion.x >= 0 && event.motion.x <= 200 && event.motion.y >= 0 && event.motion.y <= 112)
+                    {
+                        menu = 0;
+                    }
+                    break;
                 case SDL_QUIT:
                     boucle = 0;
                     break;
@@ -315,22 +352,14 @@ int main(int argc, char const *argv[])
                             SDL_Flip(screen);
                         }
                         break;
-                    
+
                     case (SDLK_b):
                         increaseVolume(&volume);
-                    break;
+                        break;
                     case (SDLK_n):
                         decreaseVolume(&volume);
-                    break;
-
-                    
-                    
+                        break;
                     }
-                case SDL_MOUSEBUTTONDOWN:
-                        if (event.button.button == SDL_BUTTON_LEFT && event.motion.x >= 0 && event.motion.x<=200 && event.motion.y >= 0 && event.motion.y<=112){
-                            menu = 0;
-                        }
-                    break;
                 }
             }
             SDL_Flip(screen);
