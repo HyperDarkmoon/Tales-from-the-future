@@ -17,6 +17,7 @@ int main(int argc, char const *argv[])
     image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
     image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMGCREDITS;
     image IMAGElevelOne;
+    image IMAGESETTINGSVOLUME;
     Mix_Music *music;
     Mix_Chunk *mus;
     texte txte;
@@ -47,7 +48,7 @@ int main(int argc, char const *argv[])
     char buttonOne[25], buttonOneAlt[25], buttonTwo[25], buttonTwoAlt[25], buttonThree[25], buttonThreeAlt[25], buttonFour[25], buttonFourAlt[25];
 
     // Calling for the following function should include the image variable, x,y,h,w, and the image name
-    initialiser_imageBOUTON(&IMAGE_BTN1, 0, 252, 1112, 200, "newgame.png");
+    initialiser_imageBOUTON(&IMAGE_BTN1, 0, 252, 112, 200, "newgame.png");
     initialiser_imageBOUTON(&IMAGE_BTN2, 0, 204, 112, 200, "Settings.png");
     initialiser_imageBOUTON(&IMAGE_BTN3, 0, 160, 112, 200, "Credits.png");
     initialiser_imageBOUTON(&IMAGE_BTN4, 0, 112, 112, 200, "quit.png");
@@ -55,6 +56,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&IMAGE_BTN2_alt, 0, 204, 112, 200, "Settingsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN3_alt, 0, 160, 112, 200, "Creditsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN4_alt, 0, 112, 112, 200, "exitalt.png");
+    initialiser_imageBOUTON(&IMAGESETTINGSVOLUME,0,SCREEN_H,112,200,"return.png");
     initialiser_imageBACK(&IMAGE1, "bg1.png");
     initialiser_imageBACK(&IMAGE2, "bg2.png");
     initialiser_imageBACK(&IMAGE3, "bg3.png");
@@ -285,6 +287,7 @@ int main(int argc, char const *argv[])
             break;
         case 2:
             afficher_imageBMP(screen, IMAGE1);
+            afficher_imageBTN(screen,IMAGESETTINGSVOLUME);
             while (SDL_PollEvent(&event))
             {
                 switch (event.type)
@@ -319,7 +322,15 @@ int main(int argc, char const *argv[])
                     case (SDLK_n):
                         decreaseVolume(&volume);
                     break;
+
+                    
+                    
                     }
+                case SDL_MOUSEBUTTONDOWN:
+                        if (event.button.button == SDL_BUTTON_LEFT && event.motion.x >= 0 && event.motion.x<=200 && event.motion.y >= 0 && event.motion.y<=112){
+                            menu = 0;
+                        }
+                    break;
                 }
             }
             SDL_Flip(screen);
