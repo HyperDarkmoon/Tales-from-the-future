@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
     image IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
     image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
     image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMGCREDITS;
-    image IMAGElevelOne;
+    image IMAGElevelOne,IMAGESPLASH;
     image IMAGESETTINGSVOLUME;
     image sndButton[5];
     image sndCtrlButton[4];
@@ -69,6 +69,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBACK(&IMAGE6, "bg6.png");
     initialiser_imageBACK(&IMAGE7, "bg7.png");
     initialiser_imageBACK(&IMAGE8, "bg8.png");
+    initialiser_imageBACK(&IMAGESPLASH,"splash.png");
     initialiser_imageBOUTON(&sndButton[0], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_0_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[1], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_1_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[2], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_2_delay-0.2s.png");
@@ -82,6 +83,9 @@ int main(int argc, char const *argv[])
     initialiser_levelOne(&IMAGElevelOne);
     // initialiser_audio(music);
     initialiser_texte(&txte);
+    afficher_imageBMP(screen, IMAGESPLASH);
+    SDL_Flip(screen);
+    SDL_Delay(2000);
     // main loop
     while (boucle)
     {
