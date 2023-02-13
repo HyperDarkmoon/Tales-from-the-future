@@ -21,6 +21,7 @@ int main(int argc, char const *argv[])
     image IMAGERETURN;
     image sndButton[5];
     image sndCtrlButton[4];
+    image screenCtrlButton[4];
     Mix_Music *music;
     Mix_Chunk *mus;
     texte txte;
@@ -41,6 +42,8 @@ int main(int argc, char const *argv[])
     int buttonFourHovered = 0;
     int volPlusHovered = 0;
     int volMinusHovered = 0;
+    int fsnHovered = 0;
+    int wndHovered = 0;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) == -1)
     {
         printf("Could not initialize SDL: %s.\n", SDL_GetError());
@@ -71,6 +74,11 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&sndCtrlButton[1],SCREEN_H - 70, SCREEN_W - 966, 77, 160, "plusAlt.png");
     initialiser_imageBOUTON(&sndCtrlButton[2],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minus.png");
     initialiser_imageBOUTON(&sndCtrlButton[3],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minusAlt.png");
+    initialiser_imageBOUTON(&screenCtrlButton[0], SCREEN_H - 700, SCREEN_W - 966, 83, 164, "fullscreen.png");
+    initialiser_imageBOUTON(&screenCtrlButton[1], SCREEN_H - 700, SCREEN_W - 966, 83, 164, "fullscreenAlt.png");
+    initialiser_imageBOUTON(&screenCtrlButton[2], SCREEN_H - 900, SCREEN_W - 1500, 83, 164, "windowed.png");
+    initialiser_imageBOUTON(&screenCtrlButton[3], SCREEN_H - 900, SCREEN_W - 1500, 83, 164, "windowedAlt.png");
+
 
     //The following functions initialize background images
     initialiser_imageBACK(&IMAGE[0], "bg1.png");
@@ -270,11 +278,16 @@ int main(int argc, char const *argv[])
         case 2: //Case 2 is the setting's window
             afficher_imageBMP(screen, IMAGE[0]); //Setting's background
             afficher_imageBTN(screen, IMAGERETURN); //Return button
-            //the if else section controls the hovering effect over the plus and minus buttons
+            //the if else section controls the hovering effect over the plus, the minus buttons and the full screen and windowed buttons
             if (volPlusHovered == 0) afficher_imageBTN(screen, sndCtrlButton[0]);
             else afficher_imageBTN(screen, sndCtrlButton[1]);
             if (volMinusHovered == 0) afficher_imageBTN(screen, sndCtrlButton[2]);
             else afficher_imageBTN(screen, sndCtrlButton[3]);
+            //full screen buttons (WIP)
+            /*if (fsnHovered == 0 ) afficher_imageBTN(screen, screenCtrlButton[0]);
+            else afficher_imageBTN(screen, screenCtrlButton[1]);
+            if (wndHovered == 0) afficher_imageBTN(screen, screenCtrlButton[2]);
+            else afficher_imageBTN(screen, screenCtrlButton[3]);*/
             //this if else section handles the volume slider
             if (volume >= 0 && volume < 20)
             {
@@ -402,7 +415,7 @@ int main(int argc, char const *argv[])
     liberer_image(IMAGE_BTN3_alt);
     liberer_image(IMAGE_BTN4_alt);
     liberer_image(IMGCREDITS);
-    liberer_musique(music); //Free music causes a seg error, unknown why
+    //liberer_musique(music); //Free music causes a seg error, unknown why
     liberer_musiquebref(mus);
 
     liberer_texte(txte);

@@ -61,6 +61,7 @@
 **Added volume controls**
 **Added volume slider**
 **Added back button to settings**
+**working on fullscreen buttons**
 
 ## 13/02/2023
 
