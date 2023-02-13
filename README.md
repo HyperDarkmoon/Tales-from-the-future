@@ -61,3 +61,9 @@
 **Added volume controls**
 **Added volume slider**
 **Added back button to settings**
+
+## 13/02/2023
+
+**Changed some functions from main.c to function.c**
+
+**Working on some debugging**

@@ -182,3 +182,53 @@ void increaseVolume(int* volume)
     Mix_VolumeMusic(*volume);
 }
 // test
+
+void printBG(SDL_Surface *screen, image IMAGE[],int *frame) {
+    if (*frame == 9)
+            {
+                *frame = 0;
+            }
+            switch (*frame)
+            {
+            case 1:
+                afficher_imageBMP(screen, IMAGE[0]);
+                SDL_Delay(100);
+
+                break;
+            case 2:
+                afficher_imageBMP(screen, IMAGE[1]);
+                SDL_Delay(100);
+
+                break;
+            case 3:
+                afficher_imageBMP(screen, IMAGE[2]);
+                SDL_Delay(100);
+
+                break;
+            case 4:
+                afficher_imageBMP(screen, IMAGE[3]);
+                SDL_Delay(100);
+
+                break;
+            case 5:
+                afficher_imageBMP(screen, IMAGE[4]);
+                SDL_Delay(100);
+
+                break;
+            case 6:
+                afficher_imageBMP(screen, IMAGE[5]);
+                SDL_Delay(100);
+
+                break;
+            case 7:
+                afficher_imageBMP(screen, IMAGE[6]);
+                SDL_Delay(100);
+                break;
+            case 8:
+                afficher_imageBMP(screen, IMAGE[7]);
+                SDL_Delay(100);
+
+                break;
+            }
+            *(frame)=*(frame)+1;
+}

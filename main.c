@@ -15,9 +15,10 @@ int main(int argc, char const *argv[])
     int volume = MIX_MAX_VOLUME - 76;
     image IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
     image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
-    image IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7, IMAGE8, IMGCREDITS;
+    image IMGCREDITS;
+    image IMAGE[8];
     image IMAGElevelOne,IMAGESPLASH;
-    image IMAGESETTINGSVOLUME;
+    image IMAGERETURN;
     image sndButton[5];
     image sndCtrlButton[4];
     Mix_Music *music;
@@ -60,16 +61,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&IMAGE_BTN2_alt, 0, 204, 112, 200, "Settingsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN3_alt, 0, 160, 112, 200, "Creditsalt.png");
     initialiser_imageBOUTON(&IMAGE_BTN4_alt, 0, 112, 112, 200, "exitalt.png");
-    initialiser_imageBOUTON(&IMAGESETTINGSVOLUME, 0, SCREEN_H, 112, 200, "return.png");
-    initialiser_imageBACK(&IMAGE1, "bg1.png");
-    initialiser_imageBACK(&IMAGE2, "bg2.png");
-    initialiser_imageBACK(&IMAGE3, "bg3.png");
-    initialiser_imageBACK(&IMAGE4, "bg4.png");
-    initialiser_imageBACK(&IMAGE5, "bg5.png");
-    initialiser_imageBACK(&IMAGE6, "bg6.png");
-    initialiser_imageBACK(&IMAGE7, "bg7.png");
-    initialiser_imageBACK(&IMAGE8, "bg8.png");
-    initialiser_imageBACK(&IMAGESPLASH,"splash.png");
+    initialiser_imageBOUTON(&IMAGERETURN, 0, SCREEN_H, 112, 200, "return.png");
     initialiser_imageBOUTON(&sndButton[0], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_0_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[1], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_1_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[2], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_2_delay-0.2s.png");
@@ -79,66 +71,39 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&sndCtrlButton[1],SCREEN_H - 70, SCREEN_W - 966, 77, 160, "plusAlt.png");
     initialiser_imageBOUTON(&sndCtrlButton[2],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minus.png");
     initialiser_imageBOUTON(&sndCtrlButton[3],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minusAlt.png");
-    initialiser_imageBACK(&IMGCREDITS, "credits.png");
-    initialiser_levelOne(&IMAGElevelOne);
-    // initialiser_audio(music);
-    initialiser_texte(&txte);
-    afficher_imageBMP(screen, IMAGESPLASH);
+
+    //The following functions initialize background images
+    initialiser_imageBACK(&IMAGE[0], "bg1.png");
+    initialiser_imageBACK(&IMAGE[1], "bg2.png");
+    initialiser_imageBACK(&IMAGE[2], "bg3.png");
+    initialiser_imageBACK(&IMAGE[3], "bg4.png");
+    initialiser_imageBACK(&IMAGE[4], "bg5.png");
+    initialiser_imageBACK(&IMAGE[5], "bg6.png");
+    initialiser_imageBACK(&IMAGE[6], "bg7.png");
+    initialiser_imageBACK(&IMAGE[7], "bg8.png");
+    initialiser_imageBACK(&IMAGESPLASH,"splash.png"); //initializes the splash art screen
+    initialiser_imageBACK(&IMGCREDITS, "credits.png"); //initializes the credit screen
+    initialiser_levelOne(&IMAGElevelOne); //initializes first level
+    // initialiser_audio(music); (this function includes the playing of the sound, therefore it will be in the loop until we seperate them in two different functions)
+    initialiser_texte(&txte); //initializes the title
+    afficher_imageBMP(screen, IMAGESPLASH); //initializes the team's splash art
     SDL_Flip(screen);
-    SDL_Delay(2000);
+    SDL_Delay(1500);
     // main loop
     while (boucle)
     {
         switch (menu) // Switch controls screen printings
         {
-        case 0:
+        case 0: //case 0 is the main menu
             //PrintMousePosition(screen, font, mouseX, mouseY); // These two lines show mouse positioning, commment if not needed
             //SDL_UpdateRect(screen, 0, 0, 0, 0);               // Line two
-            if (Mix_PlayingMusic() == 0)
+            if (Mix_PlayingMusic() == 0) //Checks if the music is not playing, if not it plays it
             {
                 initialiser_audio(music);
             }
-            if (frame == 9)
-            {
-                frame = 0;
-            }
-            switch (frame)
-            {
-            case 1:
-                afficher_imageBMP(screen, IMAGE2);
-                SDL_Delay(100);
-                break;
-            case 2:
-                afficher_imageBMP(screen, IMAGE3);
-                SDL_Delay(100);
-                break;
-            case 3:
-                afficher_imageBMP(screen, IMAGE1);
-                SDL_Delay(100);
-                break;
-            case 4:
-                afficher_imageBMP(screen, IMAGE4);
-                SDL_Delay(100);
-                break;
-            case 5:
-                afficher_imageBMP(screen, IMAGE5);
-                SDL_Delay(100);
-                break;
-            case 6:
-                afficher_imageBMP(screen, IMAGE6);
-                SDL_Delay(100);
-                break;
-            case 7:
-                afficher_imageBMP(screen, IMAGE7);
-                SDL_Delay(100);
-                break;
-            case 8:
-                afficher_imageBMP(screen, IMAGE8);
-                SDL_Delay(100);
-                break;
-            }
-            frame++;
-            afficher_texte(screen, txte);
+            printBG(screen,IMAGE, &frame); //Does the animation for the background
+            afficher_texte(screen, txte); //Prints the game's title
+            //The following if, else section handles the hovering mechanic of the buttons
             if (buttonOneHovered == 0)
             {
                 afficher_imageBTN(screen, IMAGE_BTN1);
@@ -281,20 +246,20 @@ int main(int argc, char const *argv[])
             }
             SDL_Flip(screen); // Updates the screen
             break;
-        case 1:
-            Mix_CloseAudio();
-            afficher_imageBTN(screen, IMAGElevelOne);
+        case 1: //Case 1 is the game's window
+            Mix_CloseAudio(); //Turns off the menu's music, later on there will be the level's music added
+            afficher_imageBTN(screen, IMAGElevelOne); //Prints the level's backgrounds
             while (SDL_PollEvent(&event))
             {
                 switch (event.type)
                 {
-                case SDL_QUIT:
+                case SDL_QUIT: //quit game
                     boucle = 0;
                     break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
                     {
-                    case (SDLK_ESCAPE):
+                    case (SDLK_ESCAPE): //returns to main menu
                         menu = 0;
                         break;
                     }
@@ -302,13 +267,15 @@ int main(int argc, char const *argv[])
             }
             SDL_Flip(screen);
             break;
-        case 2:
-            afficher_imageBMP(screen, IMAGE1);
-            afficher_imageBTN(screen, IMAGESETTINGSVOLUME);
+        case 2: //Case 2 is the setting's window
+            afficher_imageBMP(screen, IMAGE[0]); //Setting's background
+            afficher_imageBTN(screen, IMAGERETURN); //Return button
+            //the if else section controls the hovering effect over the plus and minus buttons
             if (volPlusHovered == 0) afficher_imageBTN(screen, sndCtrlButton[0]);
             else afficher_imageBTN(screen, sndCtrlButton[1]);
             if (volMinusHovered == 0) afficher_imageBTN(screen, sndCtrlButton[2]);
             else afficher_imageBTN(screen, sndCtrlButton[3]);
+            //this if else section handles the volume slider
             if (volume >= 0 && volume < 20)
             {
                 afficher_imageBTN(screen, sndButton[0]);
@@ -338,24 +305,24 @@ int main(int argc, char const *argv[])
             {
                 switch (event.type)
                 {
-                case SDL_MOUSEBUTTONDOWN:
+                case SDL_MOUSEBUTTONDOWN: //clicking on buttons
                     if (event.button.button == SDL_BUTTON_LEFT && event.motion.x >= 0 && event.motion.x <= 200 && event.motion.y >= 0 && event.motion.y <= 112)
                     {
-                        menu = 0;
+                        menu = 0; //return 
                     }
                     if (event.button.button == SDL_BUTTON_LEFT && event.motion.x>=SCREEN_H - 70 && event.motion.x<= SCREEN_H - 70+160 && 
                     event.motion.y >= 375 && event.motion.y <= 450 )
-                    increaseVolume(&volume);
+                    increaseVolume(&volume); //volume increase
 
                     if (event.button.button == SDL_BUTTON_LEFT && event.motion.x>=SCREEN_H + 100 && event.motion.x<= SCREEN_H + 100 +160 && 
                     event.motion.y >= 375 && event.motion.y <= 450 )
-                    decreaseVolume(&volume);
+                    decreaseVolume(&volume); //volume decrease
 
                     break;
-                case SDL_QUIT:
+                case SDL_QUIT: //quits game
                     boucle = 0;
                     break;
-                case SDL_MOUSEMOTION:
+                case SDL_MOUSEMOTION: //mouse moving
                     if (event.motion.x>=SCREEN_H - 70 && event.motion.x<= SCREEN_H - 70+160 && 
                     event.motion.y >= 375 && event.motion.y <= 450 )
                     volPlusHovered = 1;
@@ -369,10 +336,10 @@ int main(int argc, char const *argv[])
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
                     {
-                    case (SDLK_ESCAPE):
+                    case (SDLK_ESCAPE): //returns to main menu
                         menu = 0;
                         break;
-                    case (SDLK_f):
+                    case (SDLK_f): //full screen (full screen has a problem currently, we assume it's a ubuntu bug)
                         if (fullscreen == 0)
                         {
                             screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_FULLSCREEN | SDL_DOUBLEBUF);
@@ -386,33 +353,26 @@ int main(int argc, char const *argv[])
                             SDL_Flip(screen);
                         }
                         break;
-
-                    case (SDLK_b):
-                        increaseVolume(&volume);
-                        break;
-                    case (SDLK_n):
-                        decreaseVolume(&volume);
-                        break;
                     }
                 }
             }
             SDL_Flip(screen);
             break;
-        case 3:
-            Mix_CloseAudio();
-            afficher_imageBMP(screen, IMGCREDITS);
+        case 3: //Credits window
+            Mix_CloseAudio(); //Closing audio for the credits menu, in the future a credits song will play
+            afficher_imageBMP(screen, IMGCREDITS); //Credits img (WIP)
             while (SDL_PollEvent(&event))
             {
                 switch (event.type)
                 {
                 case SDL_QUIT:
-                    boucle = 0;
+                    boucle = 0; //quits game
                     break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
                     {
                     case (SDLK_ESCAPE):
-                        menu = 0;
+                        menu = 0; //returns to main menu
                         break;
                     }
                 }
@@ -425,14 +385,14 @@ int main(int argc, char const *argv[])
     }
 
     // free functions
-    liberer_image(IMAGE1);
-    liberer_image(IMAGE2);
-    liberer_image(IMAGE3);
-    liberer_image(IMAGE4);
-    liberer_image(IMAGE5);
-    liberer_image(IMAGE6);
-    liberer_image(IMAGE7);
-    liberer_image(IMAGE8);
+    liberer_image(IMAGE[0]);
+    liberer_image(IMAGE[1]);
+    liberer_image(IMAGE[2]);
+    liberer_image(IMAGE[3]);
+    liberer_image(IMAGE[4]);
+    liberer_image(IMAGE[5]);
+    liberer_image(IMAGE[6]);
+    liberer_image(IMAGE[7]);
     liberer_image(IMAGE_BTN1);
     liberer_image(IMAGE_BTN2);
     liberer_image(IMAGE_BTN3);
@@ -442,8 +402,8 @@ int main(int argc, char const *argv[])
     liberer_image(IMAGE_BTN3_alt);
     liberer_image(IMAGE_BTN4_alt);
     liberer_image(IMGCREDITS);
-    // liberer_musique(music);
-    // liberer_musiquebref(mus);
+    liberer_musique(music); //Free music causes a seg error, unknown why
+    liberer_musiquebref(mus);
 
     liberer_texte(txte);
 

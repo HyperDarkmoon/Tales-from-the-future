@@ -52,5 +52,6 @@ void afficher_imageBTN(SDL_Surface *screen,image imge);
 
 
 //Test
+void printBG(SDL_Surface *screen, image* IMAGE,int *frame);
 void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y);
 #endif
