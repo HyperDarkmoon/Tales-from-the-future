@@ -72,3 +72,5 @@
 ## 14/02/2023
 
 **Added fullscreen and windowed buttons**
+
+**Fixed Fullscreen  bug**

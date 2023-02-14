@@ -49,8 +49,7 @@ int main(int argc, char const *argv[])
         printf("Could not initialize SDL: %s.\n", SDL_GetError());
         return -1;
     }
-    int fullscreen = 1;
-    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
+    screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
     // initialization function calls
     char buttonOne[25], buttonOneAlt[25], buttonTwo[25], buttonTwoAlt[25], buttonThree[25], buttonThreeAlt[25], buttonFour[25], buttonFourAlt[25];
@@ -352,20 +351,14 @@ int main(int argc, char const *argv[])
                     case (SDLK_ESCAPE): //returns to main menu
                         menu = 0;
                         break;
-                    case (SDLK_f): //full screen (full screen has a problem currently, we assume it's a ubuntu bug)
-                        if (fullscreen == 0)
-                        {
-                            screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_FULLSCREEN | SDL_DOUBLEBUF);
-                            fullscreen = 1;
-                            SDL_Flip(screen);
-                        }
-                        if (fullscreen == 1)
-                        {
+                    case (SDLK_f): //full screen
+
+                            screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN );
+                    break;
+                    case SDLK_w:
+
                             screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-                            fullscreen = 0;
-                            SDL_Flip(screen);
-                        }
-                        break;
+                    break;
                     }
                 }
             }
