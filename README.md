@@ -68,3 +68,7 @@
 **Changed some functions from main.c to function.c**
 
 **Working on some debugging**
+
+## 14/02/2023
+
+**Added fullscreen and windowed buttons**
