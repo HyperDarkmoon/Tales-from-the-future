@@ -74,9 +74,9 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&sndCtrlButton[1],SCREEN_H - 70, SCREEN_W - 966, 77, 160, "plusAlt.png");
     initialiser_imageBOUTON(&sndCtrlButton[2],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minus.png");
     initialiser_imageBOUTON(&sndCtrlButton[3],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minusAlt.png");
-    initialiser_imageBOUTON(&screenCtrlButton[0], SCREEN_H - 700, SCREEN_W - 966, 83, 164, "fullscreen.png");
+    initialiser_imageBOUTON(&screenCtrlButton[0], SCREEN_H - 470, SCREEN_W - 966- 100, 83, 164, "fullscreen.png");
     initialiser_imageBOUTON(&screenCtrlButton[1], SCREEN_H - 700, SCREEN_W - 966, 83, 164, "fullscreenAlt.png");
-    initialiser_imageBOUTON(&screenCtrlButton[2], SCREEN_H - 900, SCREEN_W - 1500, 83, 164, "windowed.png");
+    initialiser_imageBOUTON(&screenCtrlButton[2], SCREEN_H - 470+200, SCREEN_W - 966 - 100, 83, 164, "windowed.png");
     initialiser_imageBOUTON(&screenCtrlButton[3], SCREEN_H - 900, SCREEN_W - 1500, 83, 164, "windowedAlt.png");
 
 
@@ -284,10 +284,10 @@ int main(int argc, char const *argv[])
             if (volMinusHovered == 0) afficher_imageBTN(screen, sndCtrlButton[2]);
             else afficher_imageBTN(screen, sndCtrlButton[3]);
             //full screen buttons (WIP)
-            /*if (fsnHovered == 0 ) afficher_imageBTN(screen, screenCtrlButton[0]);
+            if (fsnHovered == 0 ) afficher_imageBTN(screen, screenCtrlButton[0]);
             else afficher_imageBTN(screen, screenCtrlButton[1]);
             if (wndHovered == 0) afficher_imageBTN(screen, screenCtrlButton[2]);
-            else afficher_imageBTN(screen, screenCtrlButton[3]);*/
+            else afficher_imageBTN(screen, screenCtrlButton[3]);
             //this if else section handles the volume slider
             if (volume >= 0 && volume < 20)
             {
