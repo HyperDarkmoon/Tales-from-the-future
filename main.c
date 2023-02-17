@@ -55,14 +55,14 @@ int main(int argc, char const *argv[])
     char buttonOne[25], buttonOneAlt[25], buttonTwo[25], buttonTwoAlt[25], buttonThree[25], buttonThreeAlt[25], buttonFour[25], buttonFourAlt[25];
 
     // Calling for the following function should include the image variable, x,y,h,w, and the image name
-    initialiser_imageBOUTON(&IMAGE_BTN1, 0, 252, 112, 200, "newgame.png");
-    initialiser_imageBOUTON(&IMAGE_BTN2, 0, 204, 112, 200, "Settings.png");
-    initialiser_imageBOUTON(&IMAGE_BTN3, 0, 160, 112, 200, "Credits.png");
-    initialiser_imageBOUTON(&IMAGE_BTN4, 0, 112, 112, 200, "quit.png");
-    initialiser_imageBOUTON(&IMAGE_BTN1_alt, 0, 252, 200, 112, "newgame_alt.png");
-    initialiser_imageBOUTON(&IMAGE_BTN2_alt, 0, 204, 112, 200, "Settingsalt.png");
-    initialiser_imageBOUTON(&IMAGE_BTN3_alt, 0, 160, 112, 200, "Creditsalt.png");
-    initialiser_imageBOUTON(&IMAGE_BTN4_alt, 0, 112, 112, 200, "exitalt.png");
+    initialiser_imageBOUTON(&IMAGE_BTN1, (SCREEN_W/2)-224, 200, 224, 508, "startgame.png");
+    initialiser_imageBOUTON(&IMAGE_BTN2, (SCREEN_W/2)-224, 300, 224, 508, "settings.png");
+    initialiser_imageBOUTON(&IMAGE_BTN3, (SCREEN_W/2)-224, 400, 224, 508, "credits.png");
+    initialiser_imageBOUTON(&IMAGE_BTN4, (SCREEN_W/2)-224, 500, 224, 508, "exit.png");
+    initialiser_imageBOUTON(&IMAGE_BTN1_alt, (SCREEN_W/2)-224, 200, 224, 508, "startgameAlt.png");
+    initialiser_imageBOUTON(&IMAGE_BTN2_alt, (SCREEN_W/2)-224, 300, 224, 508, "settingsAlt.png");
+    initialiser_imageBOUTON(&IMAGE_BTN3_alt, (SCREEN_W/2)-224, 400, 224, 508, "creditsAlt.png");
+    initialiser_imageBOUTON(&IMAGE_BTN4_alt, (SCREEN_W/2)-224, 500, 224, 508, "exitAlt.png");
     initialiser_imageBOUTON(&IMAGERETURN, 0, SCREEN_H, 112, 200, "return.png");
     initialiser_imageBOUTON(&sndButton[0], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_0_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[1], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_1_delay-0.2s.png");
@@ -89,7 +89,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBACK(&IMAGE[6], "bg7.png");
     initialiser_imageBACK(&IMAGE[7], "bg8.png");
     initialiser_imageBACK(&IMAGESPLASH,"splash.png"); //initializes the splash art screen
-    initialiser_imageBACK(&IMGCREDITS, "credits.png"); //initializes the credit screen
+    initialiser_imageBACK(&IMGCREDITS, "creditsSplash.png"); //initializes the credit screen
     initialiser_levelOne(&IMAGElevelOne); //initializes first level
     // initialiser_audio(music); (this function includes the playing of the sound, therefore it will be in the loop until we seperate them in two different functions)
     initialiser_texte(&txte); //initializes the title
@@ -155,26 +155,30 @@ int main(int argc, char const *argv[])
                     break;
                 case SDL_MOUSEBUTTONDOWN: // mouse click
                     if (event.button.button == SDL_BUTTON_LEFT &&
-                        event.motion.y <= SCREEN_H - 48 && event.motion.y >= SCREEN_H - 73 &&
-                        event.motion.x <= 98 && event.motion.x >= 25)
+                        event.motion.y <= IMAGE_BTN4.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN4.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN4.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN4.pos_img_ecran.x)
                     {
                         boucle = 0;
                     }
-                    if (event.motion.y <= SCREEN_H - 189 &&
-                        event.motion.y >= SCREEN_H - 195 &&
-                        event.motion.x <= 175 && event.motion.x >= 20)
+                    if (event.button.button == SDL_BUTTON_LEFT &&
+                        event.motion.y <= IMAGE_BTN1.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN1.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN1.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN1.pos_img_ecran.x)
                     {
                         menu = 1;
                     }
-                    if (event.motion.y <= SCREEN_H - 132 &&
-                        event.motion.y >= SCREEN_H - 152 &&
-                        event.motion.x <= 175 && event.motion.x >= 20)
+                    if (event.button.button == SDL_BUTTON_LEFT &&
+                        event.motion.y <= IMAGE_BTN2.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN2.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN2.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN2.pos_img_ecran.x)
                     {
                         menu = 2;
                     }
-                    if (event.motion.y <= SCREEN_H - 98 &&
-                        event.motion.y >= SCREEN_H - 112 &&
-                        event.motion.x <= 175 && event.motion.x >= 20)
+                    if (event.button.button == SDL_BUTTON_LEFT &&
+                        event.motion.y <= IMAGE_BTN3.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN3.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN3.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN3.pos_img_ecran.x)
                     {
                         menu = 3;
                     }
@@ -183,9 +187,9 @@ int main(int argc, char const *argv[])
                 case SDL_MOUSEMOTION: // mouse moving
                     mouseX = event.motion.x;
                     mouseY = event.motion.y;
-                    if (event.motion.y <= SCREEN_H - 189 &&
-                        event.motion.y >= SCREEN_H - 195 &&
-                        event.motion.x <= 175 && event.motion.x >= 20)
+                    if (event.motion.y <= IMAGE_BTN1.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN1.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN1.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN1.pos_img_ecran.x)
                     {
                         buttonOneHovered = 1;
                         if (sfxPlayedOne == 0)
@@ -199,9 +203,9 @@ int main(int argc, char const *argv[])
                         sfxPlayedOne = 0;
                         buttonOneHovered = 0;
                     }
-                    if (event.motion.y <= SCREEN_H - 132 &&
-                        event.motion.y >= SCREEN_H - 152 &&
-                        event.motion.x <= 175 && event.motion.x >= 20)
+                    if (event.motion.y <= IMAGE_BTN2.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN2.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN2.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN2.pos_img_ecran.x)
                     {
                         buttonTwoHovered = 1;
                         if (sfxPlayedTwo == 0)
@@ -215,9 +219,9 @@ int main(int argc, char const *argv[])
                         sfxPlayedTwo = 0;
                         buttonTwoHovered = 0;
                     }
-                    if (event.motion.y <= SCREEN_H - 98 &&
-                        event.motion.y >= SCREEN_H - 112 &&
-                        event.motion.x <= 175 && event.motion.x >= 20)
+                    if (event.motion.y <= IMAGE_BTN3.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN3.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN3.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN3.pos_img_ecran.x)
                     {
                         buttonThreeHovered = 1;
                         if (sfxPlayedThree == 0)
@@ -231,9 +235,9 @@ int main(int argc, char const *argv[])
                         sfxPlayedThree = 0;
                         buttonThreeHovered = 0;
                     }
-                    if (event.motion.y <= SCREEN_H - 48 &&
-                        event.motion.y >= SCREEN_H - 73 &&
-                        event.motion.x <= 98 && event.motion.x >= 25)
+                    if (event.motion.y <= IMAGE_BTN4.pos_img_ecran.y+150 &&
+                        event.motion.y >= IMAGE_BTN4.pos_img_ecran.y+60 &&
+                        event.motion.x <= IMAGE_BTN4.pos_img_ecran.x+400 && event.motion.x >= IMAGE_BTN4.pos_img_ecran.x)
                     {
                         buttonFourHovered = 1;
                         if (sfxPlayedFour == 0)

@@ -56,11 +56,11 @@ void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name
         return;
     }
     imge->pos_img_ecran.x = x;
-    imge->pos_img_ecran.y = SCREEN_H - y;
+    imge->pos_img_ecran.y = y;
     imge->pos_img_affiche.w = h;
     imge->pos_img_affiche.h = w;
     imge->pos_img_affiche.x = x;
-    imge->pos_img_affiche.y = SCREEN_H - y;
+    imge->pos_img_affiche.y = y;
 }
 
 // Prints BMP image
