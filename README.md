@@ -74,3 +74,7 @@
 **Added fullscreen and windowed buttons**
 
 **Fixed Fullscreen  bug**
+
+## 17/02/2023
+
+**Main menu buttons remade**
