@@ -41,3 +41,40 @@
 **Added Settings menu with placeholder buttons for back and fullscreen**
 
 **Working on fullscreen mode**
+
+**Made all the initializeButton functions into the same one**
+
+## 06/02/2023
+
+**Added Level One background and Window**
+
+**Added sound effects to buttons**
+
+## 07/02/2023
+
+**Functionning animated background**
+
+**Added Credits scene**
+
+## 12/02/2023
+
+**Added volume controls**
+**Added volume slider**
+**Added back button to settings**
+**working on fullscreen buttons**
+
+## 13/02/2023
+
+**Changed some functions from main.c to function.c**
+
+**Working on some debugging**
+
+## 14/02/2023
+
+**Added fullscreen and windowed buttons**
+
+**Fixed Fullscreen  bug**
+
+## 17/02/2023
+
+**Main menu buttons remade**

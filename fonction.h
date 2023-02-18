@@ -4,6 +4,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
+#include <string.h>
 #define SCREEN_H 770
 #define SCREEN_W 1366
 
@@ -24,23 +25,19 @@ typedef struct {
 }texte;
 
 
-//fonctions image
-void initialiser_imageBACK(image *imge);
-void initialiser_imageBOUTON1(image *imge);
-void initialiser_imageBOUTON2(image *imge);
-void initialiser_imageBOUTON3(image *imge);
-void initialiser_imageBOUTON4(image *imge);
-void initialiser_imageBOUTON1_alt(image *imge);
-void initialiser_imageBOUTON2_alt(image *imge);
-void initialiser_imageBOUTON3_alt(image *imge);
-void initialiser_imageBOUTON4_alt(image *imge);
+//fonctions image*
+void initialiser_imageBACK(image *imge,char* name);
+void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name);
+void initialiser_levelOne(image *imge);
 void liberer_image(image imge);
 
 //fonctions audio
 void initialiser_audio(Mix_Music *music);
 void liberer_musique(Mix_Music *music);
-void initialiser_audiobref(Mix_Chunk *music);
+int initialiser_audiobref(Mix_Chunk *music,char* filename);
 void liberer_musiquebref(Mix_Chunk *music);
+void increaseVolume(int *volume);
+void decreaseVolume(int *volume);
 
 //fonctions texte
 void initialiser_texte(texte *txte);
@@ -55,5 +52,6 @@ void afficher_imageBTN(SDL_Surface *screen,image imge);
 
 
 //Test
+void printBG(SDL_Surface *screen, image* IMAGE,int *frame);
 void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y);
 #endif
