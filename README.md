@@ -78,3 +78,9 @@
 ## 17/02/2023
 
 **Main menu buttons remade**
+
+## 18/02/2023
+
+**Fullscreen and windowed buttons now fully functional**
+
+**adjusted resolution for fullscreen mode**
