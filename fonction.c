@@ -5,11 +5,11 @@
 #include "fonction.h"
 
 // Initializes background image
-void initialiser_imageBACK(image *imge,char* name)
+void initialiser_imageBACK(image *imge, char *name)
 {
     char link[50];
-    strcpy(link,"imgs/");
-    strcat(link,name);
+    strcpy(link, "imgs/");
+    strcat(link, name);
     imge->url = (link);
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
@@ -46,9 +46,9 @@ void initialiser_levelOne(image *imge)
 void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name)
 {
     char link[50];
-    strcpy(link,"imgs/");
-    strcat(link,name);
-    imge->url = (link); 
+    strcpy(link, "imgs/");
+    strcat(link, name);
+    imge->url = (link);
     imge->img = IMG_Load(imge->url);
     if (imge->img == NULL)
     {
@@ -56,11 +56,11 @@ void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name
         return;
     }
     imge->pos_img_ecran.x = x;
-    imge->pos_img_ecran.y = SCREEN_H - y;
+    imge->pos_img_ecran.y = y;
     imge->pos_img_affiche.w = h;
     imge->pos_img_affiche.h = w;
     imge->pos_img_affiche.x = x;
-    imge->pos_img_affiche.y = SCREEN_H - y;
+    imge->pos_img_affiche.y = y;
 }
 
 // Prints BMP image
@@ -90,7 +90,7 @@ void initialiser_audio(Mix_Music *music)
     }
     music = Mix_LoadMUS("game_sound/Main_Menu_Msc.wav");
     Mix_PlayMusic(music, -1);
-    Mix_VolumeMusic(MIX_MAX_VOLUME / 3.5);
+    Mix_VolumeMusic(MIX_MAX_VOLUME - 58);
 }
 
 // frees music files from memory
@@ -100,16 +100,17 @@ void liberer_musique(Mix_Music *music)
 }
 
 // Initializes sound effects
-void initialiser_audiobref(Mix_Chunk *music,char* filename)
+int initialiser_audiobref(Mix_Chunk *music, char *filename)
 {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     char link[50];
-    strcpy(link,"game_sound/");
-    strcat(link,filename);
+    strcpy(link, "game_sound/");
+    strcat(link, filename);
     music = Mix_LoadWAV(link);
-    Mix_PlayChannel(-1, music, 0);
+    int ch = Mix_PlayChannel(-1, music, 0);
     if (music == NULL)
         printf("%s", SDL_GetError());
+    return ch;
 }
 
 // frees memory from sound effects
@@ -122,7 +123,7 @@ void liberer_musiquebref(Mix_Chunk *music)
 void initialiser_texte(texte *txte)
 {
     TTF_Init();
-    txte->police = TTF_OpenFont("OpenSans-Bold.ttf", 100); //keep in main folder for now
+    txte->police = TTF_OpenFont("OpenSans-Bold.ttf", 100); // keep in main folder for now
     txte->color_txt.r = 255;
     txte->color_txt.g = 209;
     txte->color_txt.b = 220;
@@ -145,19 +146,89 @@ void liberer_texte(texte txte)
     TTF_Quit;
 }
 
+// THIS FUNCTION WILL HELP DETERMINE PIXEL POSITIONS
 
+void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y)
+{
+    char text[32];
+    sprintf(text, "Mouse at %d, %d", x, y);
+    text[31] = '\0';
+    SDL_Color textColor = {255, 255, 255};
+    SDL_Surface *message = TTF_RenderText_Solid(font, text, textColor);
+    SDL_Rect messageRect;
+    messageRect.x = 10;
+    messageRect.y = 10;
+    SDL_BlitSurface(message, NULL, screen, &messageRect);
+    SDL_FreeSurface(message);
+}
 
-//THIS FUNCTION WILL HELP DETERMINE PIXEL POSITIONS
+void decreaseVolume(int* volume)
+{
+    *volume = *volume - 20;
+    if (*volume < 0)
+    {
+        *volume = 0;
+    }
+    Mix_VolumeMusic(*volume);
+}
 
-void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y) {
-  char text[32];
-  sprintf(text, "Mouse at %d, %d", x, y);
-  text[31]='\0';
-  SDL_Color textColor = { 255, 255, 255 };
-  SDL_Surface *message = TTF_RenderText_Solid(font, text, textColor);
-  SDL_Rect messageRect;
-  messageRect.x = 10;
-  messageRect.y = 10;
-  SDL_BlitSurface(message, NULL, screen, &messageRect);
-  SDL_FreeSurface(message);
+void increaseVolume(int* volume)
+{
+    *volume = *volume + 20;
+    if (*volume > MIX_MAX_VOLUME - 28)
+    {
+        *volume = MIX_MAX_VOLUME - 28;
+    }
+    Mix_VolumeMusic(*volume);
+}
+// test
+
+void printBG(SDL_Surface *screen, image IMAGE[],int *frame) {
+    if (*frame == 9)
+            {
+                *frame = 0;
+            }
+            switch (*frame)
+            {
+            case 1:
+                afficher_imageBMP(screen, IMAGE[0]);
+                SDL_Delay(100);
+
+                break;
+            case 2:
+                afficher_imageBMP(screen, IMAGE[1]);
+                SDL_Delay(100);
+
+                break;
+            case 3:
+                afficher_imageBMP(screen, IMAGE[2]);
+                SDL_Delay(100);
+
+                break;
+            case 4:
+                afficher_imageBMP(screen, IMAGE[3]);
+                SDL_Delay(100);
+
+                break;
+            case 5:
+                afficher_imageBMP(screen, IMAGE[4]);
+                SDL_Delay(100);
+
+                break;
+            case 6:
+                afficher_imageBMP(screen, IMAGE[5]);
+                SDL_Delay(100);
+
+                break;
+            case 7:
+                afficher_imageBMP(screen, IMAGE[6]);
+                SDL_Delay(100);
+                break;
+            case 8:
+                afficher_imageBMP(screen, IMAGE[7]);
+                SDL_Delay(100);
+
+                break;
+            }
+            *(frame)=*(frame)+1;
 }

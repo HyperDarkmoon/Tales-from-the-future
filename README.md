@@ -55,3 +55,32 @@
 **Functionning animated background**
 
 **Added Credits scene**
+
+## 12/02/2023
+
+**Added volume controls**
+**Added volume slider**
+**Added back button to settings**
+**working on fullscreen buttons**
+
+## 13/02/2023
+
+**Changed some functions from main.c to function.c**
+
+**Working on some debugging**
+
+## 14/02/2023
+
+**Added fullscreen and windowed buttons**
+
+**Fixed Fullscreen  bug**
+
+## 17/02/2023
+
+**Main menu buttons remade**
+
+## 19/02/2023
+
+**Fullscreen and windowed buttons now fully functional**
+
+**adjusted resolution for fullscreen mode**

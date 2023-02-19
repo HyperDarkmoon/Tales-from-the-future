@@ -7,6 +7,8 @@
 #include <string.h>
 #define SCREEN_H 770
 #define SCREEN_W 1366
+#define fSCREEN_H 1080
+#define fSCREEN_W 1920
 
 //Structure image
 typedef struct {
@@ -34,8 +36,10 @@ void liberer_image(image imge);
 //fonctions audio
 void initialiser_audio(Mix_Music *music);
 void liberer_musique(Mix_Music *music);
-void initialiser_audiobref(Mix_Chunk *music,char* filename);
+int initialiser_audiobref(Mix_Chunk *music,char* filename);
 void liberer_musiquebref(Mix_Chunk *music);
+void increaseVolume(int *volume);
+void decreaseVolume(int *volume);
 
 //fonctions texte
 void initialiser_texte(texte *txte);
@@ -50,5 +54,6 @@ void afficher_imageBTN(SDL_Surface *screen,image imge);
 
 
 //Test
+void printBG(SDL_Surface *screen, image* IMAGE,int *frame);
 void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y);
 #endif
