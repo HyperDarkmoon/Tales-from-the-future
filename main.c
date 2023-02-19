@@ -63,7 +63,7 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&IMAGE_BTN2_alt, (SCREEN_W/2)-224, 300, 224, 508, "settingsAlt.png");
     initialiser_imageBOUTON(&IMAGE_BTN3_alt, (SCREEN_W/2)-224, 400, 224, 508, "creditsAlt.png");
     initialiser_imageBOUTON(&IMAGE_BTN4_alt, (SCREEN_W/2)-224, 500, 224, 508, "exitAlt.png");
-    initialiser_imageBOUTON(&IMAGERETURN, 0, SCREEN_H, 112, 200, "return.png");
+    initialiser_imageBOUTON(&IMAGERETURN, 0, 0, 112, 200, "return.png");
     initialiser_imageBOUTON(&sndButton[0], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_0_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[1], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_1_delay-0.2s.png");
     initialiser_imageBOUTON(&sndButton[2], SCREEN_H - 470, SCREEN_W - 966, 77, 384, "frame_2_delay-0.2s.png");
@@ -74,9 +74,9 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&sndCtrlButton[2],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minus.png");
     initialiser_imageBOUTON(&sndCtrlButton[3],SCREEN_H + 100, SCREEN_W - 966, 77, 160, "minusAlt.png");
     initialiser_imageBOUTON(&screenCtrlButton[0], SCREEN_H - 470, SCREEN_W - 966- 100, 83, 164, "fullscreen.png");
-    initialiser_imageBOUTON(&screenCtrlButton[1], SCREEN_H - 700, SCREEN_W - 966, 83, 164, "fullscreenAlt.png");
+    initialiser_imageBOUTON(&screenCtrlButton[1], SCREEN_H - 470, SCREEN_W - 966- 100, 83, 164, "fullscreenAlt.png");
     initialiser_imageBOUTON(&screenCtrlButton[2], SCREEN_H - 470+200, SCREEN_W - 966 - 100, 83, 164, "windowed.png");
-    initialiser_imageBOUTON(&screenCtrlButton[3], SCREEN_H - 900, SCREEN_W - 1500, 83, 164, "windowedAlt.png");
+    initialiser_imageBOUTON(&screenCtrlButton[3], SCREEN_H - 470+200, SCREEN_W - 966 - 100, 83, 164, "windowedAlt.png");
 
 
     //The following functions initialize background images
@@ -334,6 +334,17 @@ int main(int argc, char const *argv[])
                     event.motion.y >= 375 && event.motion.y <= 450 )
                     decreaseVolume(&volume); //volume decrease
 
+                    if (event.button.button = SDL_BUTTON_LEFT && event.motion.x>= screenCtrlButton[0].pos_img_ecran.x && event.motion.x<= screenCtrlButton[0].pos_img_ecran.x+164 && 
+                    event.motion.y>= screenCtrlButton[0].pos_img_ecran.y && event.motion.y<= screenCtrlButton[0].pos_img_ecran.y +86)
+                    {
+                            screen = SDL_SetVideoMode(fSCREEN_W, fSCREEN_H, 32,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN );
+                    }
+                    if (event.button.button = SDL_BUTTON_LEFT && event.motion.x>= screenCtrlButton[2].pos_img_ecran.x && event.motion.x<= screenCtrlButton[2].pos_img_ecran.x+164 && 
+                    event.motion.y>= screenCtrlButton[2].pos_img_ecran.y && event.motion.y<= screenCtrlButton[2].pos_img_ecran.y +86)
+                    {
+                            screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+                    }
+
                     break;
                 case SDL_QUIT: //quits game
                     boucle = 0;
@@ -348,6 +359,17 @@ int main(int argc, char const *argv[])
                     event.motion.y >= 375 && event.motion.y <= 450 )
                     volMinusHovered = 1;
                     else volMinusHovered = 0;
+
+                    if (event.button.button = SDL_BUTTON_LEFT && event.motion.x>= screenCtrlButton[0].pos_img_ecran.x && event.motion.x<= screenCtrlButton[0].pos_img_ecran.x+164 && 
+                    event.motion.y>= screenCtrlButton[0].pos_img_ecran.y && event.motion.y<= screenCtrlButton[0].pos_img_ecran.y +86)
+                    fsnHovered = 1;
+                    else fsnHovered = 0;
+
+                    if (event.button.button = SDL_BUTTON_LEFT && event.motion.x>= screenCtrlButton[2].pos_img_ecran.x && event.motion.x<= screenCtrlButton[2].pos_img_ecran.x+164 && 
+                    event.motion.y>= screenCtrlButton[2].pos_img_ecran.y && event.motion.y<= screenCtrlButton[2].pos_img_ecran.y +86)
+                    wndHovered = 1;
+                    else wndHovered = 0;
+
                     break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
@@ -355,13 +377,9 @@ int main(int argc, char const *argv[])
                     case (SDLK_ESCAPE): //returns to main menu
                         menu = 0;
                         break;
-                    case (SDLK_f): //full screen
-
-                            screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN );
-                    break;
                     case SDLK_w:
 
-                            screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+                            
                     break;
                     }
                 }

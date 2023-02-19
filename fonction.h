@@ -7,6 +7,8 @@
 #include <string.h>
 #define SCREEN_H 770
 #define SCREEN_W 1366
+#define fSCREEN_H 1080
+#define fSCREEN_W 1920
 
 //Structure image
 typedef struct {
