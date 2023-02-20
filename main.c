@@ -16,6 +16,7 @@ int main(int argc, char const *argv[])
     image IMAGE_BTN1, IMAGE_BTN2, IMAGE_BTN1_alt, IMAGE_BTN2_alt;
     image IMAGE_BTN3, IMAGE_BTN4, IMAGE_BTN3_alt, IMAGE_BTN4_alt;
     image IMGCREDITS;
+    image labelVol,labelScreen;
     image IMAGE[8];
     image IMAGElevelOne,IMAGESPLASH;
     image IMAGERETURN;
@@ -77,6 +78,8 @@ int main(int argc, char const *argv[])
     initialiser_imageBOUTON(&screenCtrlButton[1], SCREEN_H - 470, SCREEN_W - 966- 100, 83, 164, "fullscreenAlt.png");
     initialiser_imageBOUTON(&screenCtrlButton[2], SCREEN_H - 470+200, SCREEN_W - 966 - 100, 83, 164, "windowed.png");
     initialiser_imageBOUTON(&screenCtrlButton[3], SCREEN_H - 470+200, SCREEN_W - 966 - 100, 83, 164, "windowedAlt.png");
+    initialiser_imageBOUTON(&labelVol,0,SCREEN_W - 966,83,310,"volume.png");
+    initialiser_imageBOUTON(&labelScreen,0,SCREEN_W - 966- 100,83,310,"dsiplay.png");
 
 
     //The following functions initialize background images
@@ -317,6 +320,9 @@ int main(int argc, char const *argv[])
                 afficher_imageBTN(screen, sndButton[4]);
                 SDL_Delay(200);
             }
+            afficher_imageBTN(screen,labelVol);
+            afficher_imageBTN(screen,labelScreen);
+
             while (SDL_PollEvent(&event))
             {
                 switch (event.type)
