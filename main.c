@@ -155,7 +155,7 @@ int main(int argc, char const *argv[])
                 {
                 case SDL_QUIT: // quits the game
                     boucle = 0;
-                    break;
+                break;
                 case SDL_MOUSEBUTTONDOWN: // mouse click
                     if (event.button.button == SDL_BUTTON_LEFT &&
                         event.motion.y <= IMAGE_BTN4.pos_img_ecran.y+150 &&
@@ -186,7 +186,7 @@ int main(int argc, char const *argv[])
                         menu = 3;
                     }
                     // Mouse button clicks on specific regions, proceeds elsewhere
-                    break;
+                break;
                 case SDL_MOUSEMOTION: // mouse moving
                     mouseX = event.motion.x;
                     mouseY = event.motion.y;
@@ -255,11 +255,11 @@ int main(int argc, char const *argv[])
                         buttonFourHovered = 0;
                     }
                     // mouse hovers over specific regions, plays sound
-                    break;
+                break;
                 }
             }
             SDL_Flip(screen); // Updates the screen
-            break;
+        break;
         case 1: //Case 1 is the game's window
             Mix_CloseAudio(); //Turns off the menu's music, later on there will be the level's music added
             afficher_imageBTN(screen, IMAGElevelOne); //Prints the level's backgrounds
@@ -269,18 +269,19 @@ int main(int argc, char const *argv[])
                 {
                 case SDL_QUIT: //quit game
                     boucle = 0;
-                    break;
+                break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
                     {
                     case (SDLK_ESCAPE): //returns to main menu
                         menu = 0;
-                        break;
+                    break;
                     }
+                break;
                 }
             }
             SDL_Flip(screen);
-            break;
+        break;
         case 2: //Case 2 is the setting's window
             afficher_imageBMP(screen, IMAGE[0]); //Setting's background
             afficher_imageBTN(screen, IMAGERETURN); //Return button
@@ -343,18 +344,21 @@ int main(int argc, char const *argv[])
                     if (event.button.button = SDL_BUTTON_LEFT && event.motion.x>= screenCtrlButton[0].pos_img_ecran.x && event.motion.x<= screenCtrlButton[0].pos_img_ecran.x+164 && 
                     event.motion.y>= screenCtrlButton[0].pos_img_ecran.y && event.motion.y<= screenCtrlButton[0].pos_img_ecran.y +86)
                     {
-                            screen = SDL_SetVideoMode(fSCREEN_W, fSCREEN_H, 32,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN );
+                            printf("Before FS");
+                            screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN );
+                            printf("FS works");
                     }
                     if (event.button.button = SDL_BUTTON_LEFT && event.motion.x>= screenCtrlButton[2].pos_img_ecran.x && event.motion.x<= screenCtrlButton[2].pos_img_ecran.x+164 && 
                     event.motion.y>= screenCtrlButton[2].pos_img_ecran.y && event.motion.y<= screenCtrlButton[2].pos_img_ecran.y +86)
                     {
+                            printf("Before WM");
                             screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+                            printf("WM works");
                     }
-
-                    break;
+                break;
                 case SDL_QUIT: //quits game
                     boucle = 0;
-                    break;
+                break;
                 case SDL_MOUSEMOTION: //mouse moving
                     if (event.motion.x>=SCREEN_H - 70 && event.motion.x<= SCREEN_H - 70+160 && 
                     event.motion.y >= 375 && event.motion.y <= 450 )
@@ -376,22 +380,19 @@ int main(int argc, char const *argv[])
                     wndHovered = 1;
                     else wndHovered = 0;
 
-                    break;
+                break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
                     {
                     case (SDLK_ESCAPE): //returns to main menu
                         menu = 0;
-                        break;
-                    case SDLK_w:
-
-                            
                     break;
                     }
+                break;
                 }
             }
             SDL_Flip(screen);
-            break;
+        break;
         case 3: //Credits window
             Mix_CloseAudio(); //Closing audio for the credits menu, in the future a credits song will play
             afficher_imageBMP(screen, IMGCREDITS); //Credits img (WIP)
@@ -401,20 +402,19 @@ int main(int argc, char const *argv[])
                 {
                 case SDL_QUIT:
                     boucle = 0; //quits game
-                    break;
+                break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
                     {
                     case (SDLK_ESCAPE):
                         menu = 0; //returns to main menu
-                        break;
+                    break;
                     }
+                break;
                 }
             }
             SDL_Flip(screen);
-            break;
-            SDL_Flip(screen);
-            break;
+        break;
         }
     }
 
