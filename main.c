@@ -419,6 +419,7 @@ int main(int argc, char const *argv[])
     }
 
     // free functions
+    
     liberer_image(IMAGE[0]);
     liberer_image(IMAGE[1]);
     liberer_image(IMAGE[2]);
@@ -435,6 +436,25 @@ int main(int argc, char const *argv[])
     liberer_image(IMAGE_BTN2_alt);
     liberer_image(IMAGE_BTN3_alt);
     liberer_image(IMAGE_BTN4_alt);
+    liberer_image(IMGCREDITS);
+    liberer_image(sndButton[0]);
+    liberer_image(sndButton[1]);
+    liberer_image(sndButton[2]);
+    liberer_image(sndButton[3]);
+    liberer_image(sndButton[4]);
+    liberer_image(sndCtrlButton[0]);
+    liberer_image(sndCtrlButton[1]);
+    liberer_image(sndCtrlButton[2]);
+    liberer_image(sndCtrlButton[4]);
+    liberer_image(screenCtrlButton[0]);
+    liberer_image(screenCtrlButton[1]);
+    liberer_image(screenCtrlButton[2]);
+    liberer_image(screenCtrlButton[3]);
+    liberer_image(labelVol);
+    liberer_image(labelScreen);
+    liberer_image(IMAGESPLASH);
+    liberer_image(IMAGERETURN);
+    liberer_image(IMAGElevelOne);
     liberer_image(IMGCREDITS);
     //liberer_musique(music); //Free music causes a seg error, unknown why
     liberer_musiquebref(mus);
