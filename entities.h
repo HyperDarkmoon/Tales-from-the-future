@@ -1,5 +1,5 @@
-#ifndef ES_H
-#define ES_H
+#ifndef ENTITIES_H
+#define ENTITIES_H
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
@@ -22,9 +22,10 @@ typedef struct {
 }Entity;
 
 
-void update_entity_animation(Entity *player, Uint32 current_time, int player_moving);
-void init_entity(Entity* player, int x, int y, int velocity, int maximumvelocity, int health, int max_health, const char* sprite_paths[]);
+void update_entity_animation(Entity *player, int player_moving);
+void init_entity(Entity* player, int x, int y, int velocity, int maximumvelocity, int health, int max_health);
 void print_entity(Entity *player, SDL_Surface *screen_surface, int player_moving);
-void init_idle_entity_animation(Entity *player, const char *idle_sprite_paths[]);
+void init_idle_entity_animation(Entity *player);
+void init_entity_animation(Entity *player);
 
 #endif
