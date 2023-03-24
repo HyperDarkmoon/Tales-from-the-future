@@ -1,234 +1,200 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
-#include <SDL/SDL_ttf.h>
-#include "fonction.h"
 
-// Initializes background image
-void initialiser_imageBACK(image *imge, char *name)
-{
-    char link[50];
-    strcpy(link, "imgs/");
-    strcat(link, name);
-    imge->url = (link);
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
+#include "header.h"
+#define LEFT 0
+#define RIGHT 1
+#define UP 2
+#define DOWN 3
+#define MAX_SCORES 100
+#define SCREEN_WIDTH 1980
+#define BACKGROUND_HEIGHT 2400
+#define SCREEN_HEIGHT 600
+
+void initBack(Background *b, SDL_Surface *screen) {
+    // Load background images
+    b->images[0] = IMG_Load("111.png");
+    b->images[1] = IMG_Load("111.png");
+    b->images[2] = IMG_Load("111.png");
+    b->images[3] = IMG_Load("111.png");
+
+    b->currentImageIndex = 0;
+
+    // Set background rect x and y to 0
+    b->rect.x = 0;
+    b->rect.y = 0;
+
+    // Set background rect width and height to the width and height of the first image
+    b->rect.w = b->images[0]->w;
+    b->rect.h = b->images[0]->h;
+
+    // Set camera position x and y to 0
+    b->camera_pos.x = 0;
+    b->camera_pos.y = 0;
+
+    // Calculate camera view width and height based on screen size and aspect ratio of background image
+    b->camera_pos.w = SCREEN_WIDTH * BACKGROUND_HEIGHT / SCREEN_HEIGHT;
+    b->camera_pos.h = SCREEN_HEIGHT * BACKGROUND_HEIGHT / SCREEN_WIDTH;
+
+    // Set direction to 0
+    b->direction = 0;
+}
+
+
+void initMusic(char *music) {
+    // Initialize SDL_mixer
+    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+        printf("Unable to initialize SDL_mixer: %s\n", Mix_GetError());
+        exit(1);
+    }
+
+}
+
+void afficherBack(Background b, SDL_Surface *screen) {
+    // Blit the current image frame of the background to the screen
+    SDL_BlitSurface(b.images[b.currentImageIndex], &b.camera_pos, screen,NULL);
+    // Update the screen
+    SDL_Flip(screen);
+}
+
+void scrolling(Background *b, int direction, int dx) {
+    switch (direction) {
+        case LEFT:
+            b->camera_pos.x -= dx;
+            break;
+        case RIGHT:
+            b->camera_pos.x += dx;
+            break;
+        case UP:
+            b->camera_pos.y -= dx;
+            break;
+        case DOWN:
+            b->camera_pos.y += dx;
+            break;
+        default:
+            break;
+            
+        
+    }
+    //Checks if the background rectangle has gone off-screen and wraps it around to the opposite side if necessary
+    if (b->camera_pos.x < 0) {
+        b->camera_pos.x += b->rect.w;
+    } else if (b->camera_pos.x >= b->rect.w) {
+        b->camera_pos.x -= b->rect.w;
+    }
+    if (b->camera_pos.y < 0) {
+        b->camera_pos.y += b->rect.h;
+    } else if (b->camera_pos.y >= b->rect.h) {
+        b->camera_pos.y -= b->rect.h;
+    }
+}
+
+
+void saveScore(ScoreInfo s, char *fileName) {
+    FILE *fp;
+    fp = fopen(fileName, "a");
+    if (fp == NULL) {
+        printf("Error: could not open file.\n");
         return;
     }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = 0;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = 0;
-    imge->pos_img_affiche.h = SCREEN_H;
-    imge->pos_img_affiche.w = SCREEN_W;
+    fprintf(fp, "%d %d %s\n", s.score, s.time, s.playerName);
+    fclose(fp);
 }
 
-void initialiser_levelOne(image *imge)
-{
-    imge->url = ("bgimgs/level1.jpg");
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
+void bestScore(char *filename, ScoreInfo t[]) {
+    FILE *fp;
+    char line[100];
+    int i = 0;
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("Error: could not open file.\n");
         return;
     }
-    imge->pos_img_ecran.x = 0;
-    imge->pos_img_ecran.y = 0;
-    imge->pos_img_affiche.x = 0;
-    imge->pos_img_affiche.y = 0;
-    imge->pos_img_affiche.h = SCREEN_H;
-    imge->pos_img_affiche.w = SCREEN_W;
-}
-
-// Initializes All the buttons per parameter
-void initialiser_imageBOUTON(image *imge, int x, int y, int h, int w, char *name)
-{
-    char link[50];
-    strcpy(link, "imgs/");
-    strcat(link, name);
-    imge->url = (link);
-    imge->img = IMG_Load(imge->url);
-    if (imge->img == NULL)
-    {
-        printf("unable to load background image %s \n", SDL_GetError());
-        return;
+    while (fgets(line, sizeof(line), fp) != NULL && i < MAX_SCORES) {
+        sscanf(line, "%d %d %s", &t[i].score, &t[i].time, t[i].playerName);
+        i++;
     }
-    imge->pos_img_ecran.x = x;
-    imge->pos_img_ecran.y = y;
-    imge->pos_img_affiche.w = h;
-    imge->pos_img_affiche.h = w;
-    imge->pos_img_affiche.x = x;
-    imge->pos_img_affiche.y = y;
-}
-
-// Prints BMP image
-void afficher_imageBMP(SDL_Surface *screen, image imge)
-{
-    SDL_BlitSurface(imge.img, &imge.pos_img_affiche, screen, &imge.pos_img_ecran);
-}
-
-// Prints first button
-void afficher_imageBTN(SDL_Surface *screen, image imge)
-{
-    SDL_BlitSurface(imge.img, NULL, screen, &imge.pos_img_ecran);
-}
-
-// frees images from memory
-void liberer_image(image imge)
-{
-    SDL_FreeSurface(imge.img);
-}
-
-// Initializes the audio files
-void initialiser_audio(Mix_Music *music)
-{
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
-    {
-        printf("%s", SDL_GetError());
-    }
-    music = Mix_LoadMUS("game_sound/Main_Menu_Msc.wav");
-    Mix_PlayMusic(music, -1);
-    Mix_VolumeMusic(MIX_MAX_VOLUME - 58);
-}
-
-// frees music files from memory
-void liberer_musique(Mix_Music *music)
-{
-    Mix_FreeMusic(music);
-}
-
-// Initializes sound effects
-int initialiser_audiobref(Mix_Chunk *music, char *filename)
-{
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-    char link[50];
-    strcpy(link, "game_sound/");
-    strcat(link, filename);
-    music = Mix_LoadWAV(link);
-    int ch = Mix_PlayChannel(-1, music, 0);
-    if (music == NULL)
-        printf("%s", SDL_GetError());
-    return ch;
-}
-
-// frees memory from sound effects
-void liberer_musiquebref(Mix_Chunk *music)
-{
-    Mix_FreeChunk(music);
-}
-
-// initializes text
-void initialiser_texte(texte *txte)
-{
-    TTF_Init();
-    txte->police = TTF_OpenFont("OpenSans-Bold.ttf", 100); // keep in main folder for now
-    txte->color_txt.r = 255;
-    txte->color_txt.g = 209;
-    txte->color_txt.b = 220;
-    txte->pos_txt.x = 50;
-    txte->pos_txt.y = 0;
-}
-
-// prints text (the title in this case)
-void afficher_texte(SDL_Surface *screen, texte txte)
-{
-    txte.txt = TTF_RenderText_Blended(txte.police, "TALES FROM THE FUTURE", txte.color_txt);
-    SDL_BlitSurface(txte.txt, NULL, screen, &txte.pos_txt);
-    SDL_FreeSurface(txte.txt);
-}
-
-// frees text from memory
-void liberer_texte(texte txte)
-{
-    TTF_CloseFont(txte.police);
-    TTF_Quit;
-}
-
-// THIS FUNCTION WILL HELP DETERMINE PIXEL POSITIONS
-
-void PrintMousePosition(SDL_Surface *screen, TTF_Font *font, int x, int y)
-{
-    char text[32];
-    sprintf(text, "Mouse at %d, %d", x, y);
-    text[31] = '\0';
-    SDL_Color textColor = {255, 255, 255};
-    SDL_Surface *message = TTF_RenderText_Solid(font, text, textColor);
-    SDL_Rect messageRect;
-    messageRect.x = 10;
-    messageRect.y = 10;
-    SDL_BlitSurface(message, NULL, screen, &messageRect);
-    SDL_FreeSurface(message);
-}
-
-void decreaseVolume(int* volume)
-{
-    *volume = *volume - 20;
-    if (*volume < 0)
-    {
-        *volume = 0;
-    }
-    Mix_VolumeMusic(*volume);
-}
-
-void increaseVolume(int* volume)
-{
-    *volume = *volume + 20;
-    if (*volume > MIX_MAX_VOLUME - 28)
-    {
-        *volume = MIX_MAX_VOLUME - 28;
-    }
-    Mix_VolumeMusic(*volume);
-}
-// test
-
-void printBG(SDL_Surface *screen, image IMAGE[],int *frame) {
-    if (*frame == 9)
-            {
-                *frame = 0;
+    fclose(fp);
+    int n = i;
+    ScoreInfo temp;
+    for (i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (t[j].score > t[i].score || (t[j].score == t[i].score && t[j].time < t[i].time)) {
+                temp = t[i];
+                t[i] = t[j];
+                t[j] = temp;
             }
-            switch (*frame)
-            {
-            case 1:
-                afficher_imageBMP(screen, IMAGE[0]);
-                SDL_Delay(100);
-
-                break;
-            case 2:
-                afficher_imageBMP(screen, IMAGE[1]);
-                SDL_Delay(100);
-
-                break;
-            case 3:
-                afficher_imageBMP(screen, IMAGE[2]);
-                SDL_Delay(100);
-
-                break;
-            case 4:
-                afficher_imageBMP(screen, IMAGE[3]);
-                SDL_Delay(100);
-
-                break;
-            case 5:
-                afficher_imageBMP(screen, IMAGE[4]);
-                SDL_Delay(100);
-
-                break;
-            case 6:
-                afficher_imageBMP(screen, IMAGE[5]);
-                SDL_Delay(100);
-
-                break;
-            case 7:
-                afficher_imageBMP(screen, IMAGE[6]);
-                SDL_Delay(100);
-                break;
-            case 8:
-                afficher_imageBMP(screen, IMAGE[7]);
-                SDL_Delay(100);
-
-                break;
-            }
-            *(frame)=*(frame)+1;
+        }
+    }
+    printf("High Scores:\n");
+    for (i = 0; i < 3 && i < n; i++) {
+        char scoreString[50];
+        sprintf(scoreString, "%s %d %d", t[i].playerName, t[i].score, t[i].time);
+        printf("%d. %s\n", i + 1, scoreString);
+    }
 }
+void animerBack(Background *b,SDL_Surface **screen) {
+    const int dx = 10; 
+
+    b->currentImageIndex++;
+
+    if (b->currentImageIndex >= 4) {
+        b->currentImageIndex = 0;
+    }
+
+    SDL_Event event;
+    char *scoreFile = "scores.txt";
+    ScoreInfo currentScore = { 1000, 120, "John" };
+    ScoreInfo topScores[3] = {
+    {0, 0, ""},
+    {0, 0, ""},
+    {0, 0, ""}
+    };
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym) {
+                    case SDLK_LEFT:
+                        scrolling(b, LEFT,dx);
+                        break;
+                    case SDLK_RIGHT:
+                        scrolling(b, RIGHT,dx);
+                        break;
+                    case SDLK_UP:
+                        scrolling(b, UP,dx);
+                        break;
+                    case SDLK_DOWN:
+                        scrolling(b, DOWN,dx);
+                        break;
+                    case SDLK_m:
+                        saveScore(currentScore, scoreFile);
+                        bestScore(scoreFile, topScores);
+            
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Blit the current background image to the screen
+    afficherBack(*b,*screen);
+}
+
+
+void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2){
+    SDL_FillRect(screen, NULL, 0);   // Clear the screen
+    initBack(b1, screen);
+    initBack(b2, screen);
+    b1->camera_pos = (SDL_Rect) {0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
+    b2->camera_pos = (SDL_Rect) {SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
+    animerBack(b1,&screen);
+    animerBack(b2,&screen);
+    }
+
+
+
+
+
+
+
