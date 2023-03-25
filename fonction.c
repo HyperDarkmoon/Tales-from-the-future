@@ -234,8 +234,31 @@ void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2){
     animerBack(b1,&screen);
     animerBack(b2,&screen);
     }
+void draw_hearts(SDL_Surface *surface, int num_hearts) {
+    SDL_Surface *full_heart = IMG_Load("heart1.png");
+    SDL_Surface *half_heart = IMG_Load("heart2.png");
+    SDL_Surface *empty_heart = IMG_Load("heart3.png");
 
+    int heart_width = full_heart->w;
+    int heart_height = full_heart->h;
 
+    int x = 10;
+    int y = 10;
+
+    for (int i = 0; i < num_hearts; i++) {
+        SDL_Rect dest_rect = { x, y, heart_width, heart_height };
+
+        if (i % 2 == 0) {
+            SDL_BlitSurface(full_heart, NULL, surface, &dest_rect);
+        } else if (i % 2 == 1) {
+            SDL_BlitSurface(half_heart, NULL, surface, &dest_rect);
+        } else {
+            SDL_BlitSurface(empty_heart, NULL, surface, &dest_rect);
+        }
+
+        x += heart_width + 10;
+    }
+}
 
 
 

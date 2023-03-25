@@ -36,3 +36,4 @@ void saveScore(ScoreInfo s, char *fileName);
 void bestScore(char *filename, ScoreInfo t[]);
 void animerBack(Background *b, SDL_Surface **screen);
 void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2);
+void draw_hearts(SDL_Surface *surface, int num_hearts);
