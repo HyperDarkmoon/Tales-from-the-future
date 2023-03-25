@@ -7,6 +7,7 @@ int main() {
     SDL_Event event;
     const char path[30]="111.png";
     
+    
 
     // Initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == -1) {
@@ -32,6 +33,7 @@ int main() {
     }
     Mix_PlayMusic(bgMusic, -1);
     int done = 0;
+    int playerX,playerY=10; // players position
     while (!done) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) { 
@@ -41,13 +43,15 @@ int main() {
                          case SDLK_ESCAPE:
                             done = 1;
                             break;
-                        case SDLK_s:
+                        case SDLK_s: // S botton for singleplayer mode
+                            moveCamera(&b, playerX, playerY);
                             animerBack(&b,&screen);
                             SDL_Flip(screen);
                             SDL_Delay(10);
                             break;
-                        case SDLK_q:
-                            
+                        case SDLK_q: //Q botton for multiplayer mode
+                            moveCamera(&b1, playerX, playerY);
+                            moveCamera(&b2, playerX, playerY);
                             playMultiplayer(screen, &b1, &b2);
                             break;
                         default:

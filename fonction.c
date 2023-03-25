@@ -69,6 +69,27 @@ void initMusic(char *music) {
     }
 
 }
+void moveCamera(Background *b, int x, int y) {
+    // Update camera position based on player position
+    b->camera_pos.x = x - (b->camera_pos.w / 2);
+    b->camera_pos.y = y - (b->camera_pos.h / 2);
+
+    // Keep camera inside background bounds
+    if (b->camera_pos.x < 0) {
+        b->camera_pos.x = 0;
+    } else if (b->camera_pos.x > b->rect.w - b->camera_pos.w) {
+        b->camera_pos.x = b->rect.w - b->camera_pos.w;
+    }
+    if (b->camera_pos.y < 0) {
+        b->camera_pos.y = 0;
+    } else if (b->camera_pos.y > b->rect.h - b->camera_pos.h) {
+        b->camera_pos.y = b->rect.h - b->camera_pos.h;
+    }
+
+    // Set camera view width and height to cover entire background image
+    b->camera_pos.w = b->rect.w;
+    b->camera_pos.h = b->rect.h;
+}
 
 void afficherBack(Background b, SDL_Surface *screen) {
     // Blit the current image frame of the background to the screen
