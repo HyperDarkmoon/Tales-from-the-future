@@ -5,6 +5,14 @@
 #include <SDL/SDL_mixer.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define LEFT 0
+#define RIGHT 1
+#define UP 2
+#define DOWN 3
+#define SCREEN_WIDTH 1980
+#define BACKGROUND_HEIGHT 480
+#define SCREEN_HEIGHT 600
+#define MAX_SCORES 100
 
 typedef struct {
     SDL_Rect rect;
@@ -19,7 +27,7 @@ typedef struct {
     char playerName[20];
 } ScoreInfo;
 
-void initBack(Background *b, SDL_Surface *screen);
+void initBack(Background *b, SDL_Surface *screen,const char* path);
 void initMusic(char *music);
 void afficherBack(Background b, SDL_Surface *screen);
 void scrolling(Background *b, int direction,int dx);

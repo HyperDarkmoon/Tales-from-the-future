@@ -1,38 +1,60 @@
 
 #include "header.h"
-#define LEFT 0
-#define RIGHT 1
-#define UP 2
-#define DOWN 3
-#define MAX_SCORES 100
-#define SCREEN_WIDTH 1980
-#define BACKGROUND_HEIGHT 2400
-#define SCREEN_HEIGHT 600
 
-void initBack(Background *b, SDL_Surface *screen) {
-    // Load background images
-    b->images[0] = IMG_Load("111.png");
-    b->images[1] = IMG_Load("111.png");
-    b->images[2] = IMG_Load("111.png");
-    b->images[3] = IMG_Load("111.png");
 
-    b->currentImageIndex = 0;
+
+void initBack(Background* b, SDL_Surface* screen, const char* path) {
+    // Load background image
+    SDL_Surface* temp = IMG_Load(path);
+    if (temp == NULL) {
+        printf("Error: could not load background image: %s\n", IMG_GetError());
+        exit(1);
+    }
+
+    // Create a surface with the same format as the screen surface
+    SDL_Surface* background = SDL_CreateRGBSurface(SDL_SWSURFACE, SCREEN_WIDTH, SCREEN_HEIGHT, screen->format->BitsPerPixel, 0, 0, 0, 0);
+    if (background == NULL) {
+        printf("Error: could not create background surface: %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    // Scale background image to fill the entire screen without black borders
+    SDL_Rect src_rect = { 0, 0, temp->w, temp->h };
+    SDL_Rect dest_rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+    if (temp->w * SCREEN_HEIGHT > SCREEN_WIDTH * temp->h) {
+        dest_rect.h = SCREEN_WIDTH * temp->h / temp->w;
+        dest_rect.y = (SCREEN_HEIGHT - dest_rect.h) / 2;
+    }
+    else {
+        dest_rect.w = SCREEN_HEIGHT * temp->w / temp->h;
+        dest_rect.x = (SCREEN_WIDTH - dest_rect.w) / 2;
+    }
+    SDL_SoftStretch(temp, &src_rect, background, &dest_rect);
+
+    // Free temporary surface
+    SDL_FreeSurface(temp);
 
     // Set background rect x and y to 0
     b->rect.x = 0;
     b->rect.y = 0;
 
-    // Set background rect width and height to the width and height of the first image
-    b->rect.w = b->images[0]->w;
-    b->rect.h = b->images[0]->h;
+    // Set background rect width and height to the width and height of the background surface
+    b->rect.w = background->w;
+    b->rect.h = background->h;
 
     // Set camera position x and y to 0
     b->camera_pos.x = 0;
     b->camera_pos.y = 0;
 
-    // Calculate camera view width and height based on screen size and aspect ratio of background image
-    b->camera_pos.w = SCREEN_WIDTH * BACKGROUND_HEIGHT / SCREEN_HEIGHT;
-    b->camera_pos.h = SCREEN_HEIGHT * BACKGROUND_HEIGHT / SCREEN_WIDTH;
+    // Set camera view width and height to the screen width and height
+    b->camera_pos.w = SCREEN_WIDTH;
+    b->camera_pos.h = SCREEN_HEIGHT;
+
+    // Set background images to the scaled surface
+    b->images[0] = background;
+    b->images[1] = background;
+    b->images[2] = background;
+    b->images[3] = background;
 
     // Set direction to 0
     b->direction = 0;
@@ -184,8 +206,8 @@ void animerBack(Background *b,SDL_Surface **screen) {
 
 void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2){
     SDL_FillRect(screen, NULL, 0);   // Clear the screen
-    initBack(b1, screen);
-    initBack(b2, screen);
+    initBack(b1, screen,"111.png");
+    initBack(b2, screen,"111.png");
     b1->camera_pos = (SDL_Rect) {0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
     b2->camera_pos = (SDL_Rect) {SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
     animerBack(b1,&screen);

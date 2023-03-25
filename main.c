@@ -1,12 +1,11 @@
 
 #include "header.h"
-#define SCREEN_WIDTH 1520
-#define BACKGROUND_HEIGHT 2400
-#define SCREEN_HEIGHT 600
+
 int main() {
     SDL_Surface *screen = NULL;
     Background b,b1,b2;
     SDL_Event event;
+    const char path[30]="111.png";
     
 
     // Initialize SDL video
@@ -23,7 +22,7 @@ int main() {
     }
 
     // Initialize the background
-    initBack(&b,screen);
+    initBack(&b,screen,"111.png");
     initMusic("background_music.mp3");
     Mix_Music *bgMusic = Mix_LoadMUS("background_music.mp3");
     if (bgMusic == NULL) {
@@ -70,30 +69,3 @@ int main() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   /* if (numPlayers == 1) {
-        // Singleplayer mode
-        playSinglePlayer(screen, &b);
-    }
-    else if (numPlayers == 2) {
-        // Multiplayer mode
-        playMultiplayer(screen, &b);
-    }
-    else {
-        printf("Invalid number of players. Exiting...\n");
-    }*/
