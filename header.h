@@ -27,13 +27,14 @@ typedef struct {
     char playerName[20];
 } ScoreInfo;
 
+
 void initBack(Background *b, SDL_Surface *screen,const char* path);
 void initMusic(char *music);
-//void moveCamera(Background *b, int x, int y);
+/*void moveCamera(Background *b, int x, int y);*/
 void afficherBack(Background b, SDL_Surface *screen);
 void scrolling(Background *b, int direction,int dx);
 void saveScore(ScoreInfo s, char *fileName);
 void bestScore(char *filename, ScoreInfo t[]);
 void animerBack(Background *b, SDL_Surface **screen);
 void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2);
-void draw_hearts(SDL_Surface *surface, int num_hearts);
+void draw_hearts(SDL_Surface *surface, float lives,Background *b);

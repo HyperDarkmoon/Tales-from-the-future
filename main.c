@@ -6,7 +6,7 @@ int main() {
     Background b,b1,b2;
     SDL_Event event;
     const char path[30]="111.png";
-    int lives = 3;
+    float lives = 3;
     SDL_Surface* heart = NULL;
     
 
@@ -48,7 +48,7 @@ int main() {
                             //moveCamera(&b, playerX, playerY);
                             animerBack(&b,&screen);
                             SDL_Flip(screen);
-                            draw_hearts(screen,lives);
+                            draw_hearts(screen,lives,&b);
                             SDL_Delay(10);
 
                             break;
@@ -56,7 +56,9 @@ int main() {
                             //moveCamera(&b1, playerX, playerY);
                             //moveCamera(&b2, playerX, playerY);
                             playMultiplayer(screen, &b1, &b2);
-                            draw_hearts(screen,lives);
+                            draw_hearts(screen,lives,&b1);
+                            draw_hearts(screen,lives,&b2);
+                            SDL_Delay(10);
                             break;
                         default:
                             break;

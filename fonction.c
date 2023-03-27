@@ -234,7 +234,7 @@ void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2){
     animerBack(b1,&screen);
     animerBack(b2,&screen);
     }
-void draw_hearts(SDL_Surface *surface, int lives) {
+void draw_hearts(SDL_Surface *surface, float lives,Background*b) {
     SDL_Surface *full_heart = IMG_Load("heart1.png");
     SDL_Surface *half_heart = IMG_Load("heart2.png");
     SDL_Surface *empty_heart = IMG_Load("heart3.png");
@@ -242,22 +242,27 @@ void draw_hearts(SDL_Surface *surface, int lives) {
     int heart_width = full_heart->w;
     int heart_height = full_heart->h;
 
-    int x = 10;
-    int y = 10;
+    int x = b->rect.x;
+    int y = b->rect.y;
 
-    for (int i = 0; i < lives; i++) {
+    for (int i = 0; i < 3; i++) {
         SDL_Rect dest_rect = { x, y, heart_width, heart_height };
 
-        if (i % 2 == 0) {
+        if (lives >= 1.0f) {
             SDL_BlitSurface(full_heart, NULL, surface, &dest_rect);
-        } else if (i % 2 == 1) {
+        } else if (lives > 0.5f) {
             SDL_BlitSurface(half_heart, NULL, surface, &dest_rect);
         } else {
             SDL_BlitSurface(empty_heart, NULL, surface, &dest_rect);
         }
 
         x += heart_width + 10;
+        lives -= 1.0f;
     }
+
+    SDL_FreeSurface(full_heart);
+    SDL_FreeSurface(half_heart);
+    SDL_FreeSurface(empty_heart);
 }
 
 
