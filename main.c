@@ -45,7 +45,7 @@ int main() {
                             done = 1;
                             break;
                         case SDLK_s: // S botton for singleplayer mode
-                            moveCamera(&b, playerX, playerY);
+                            //moveCamera(&b, playerX, playerY);
                             animerBack(&b,&screen);
                             SDL_Flip(screen);
                             draw_hearts(screen,lives);
@@ -53,8 +53,8 @@ int main() {
 
                             break;
                         case SDLK_q: //Q botton for multiplayer mode
-                            moveCamera(&b1, playerX, playerY);
-                            moveCamera(&b2, playerX, playerY);
+                            //moveCamera(&b1, playerX, playerY);
+                            //moveCamera(&b2, playerX, playerY);
                             playMultiplayer(screen, &b1, &b2);
                             draw_hearts(screen,lives);
                             break;

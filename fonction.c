@@ -69,7 +69,7 @@ void initMusic(char *music) {
     }
 
 }
-void moveCamera(Background *b, int x, int y) {
+/*void moveCamera(Background *b, int x, int y) {
     // Update camera position based on player position
     b->camera_pos.x = x - (b->camera_pos.w / 2);
     b->camera_pos.y = y - (b->camera_pos.h / 2);
@@ -89,7 +89,7 @@ void moveCamera(Background *b, int x, int y) {
     // Set camera view width and height to cover entire background image
     b->camera_pos.w = b->rect.w;
     b->camera_pos.h = b->rect.h;
-}
+}*/
 
 void afficherBack(Background b, SDL_Surface *screen) {
     // Blit the current image frame of the background to the screen
@@ -234,7 +234,7 @@ void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2){
     animerBack(b1,&screen);
     animerBack(b2,&screen);
     }
-void draw_hearts(SDL_Surface *surface, int num_hearts) {
+void draw_hearts(SDL_Surface *surface, int lives) {
     SDL_Surface *full_heart = IMG_Load("heart1.png");
     SDL_Surface *half_heart = IMG_Load("heart2.png");
     SDL_Surface *empty_heart = IMG_Load("heart3.png");
@@ -245,7 +245,7 @@ void draw_hearts(SDL_Surface *surface, int num_hearts) {
     int x = 10;
     int y = 10;
 
-    for (int i = 0; i < num_hearts; i++) {
+    for (int i = 0; i < lives; i++) {
         SDL_Rect dest_rect = { x, y, heart_width, heart_height };
 
         if (i % 2 == 0) {

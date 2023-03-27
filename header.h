@@ -29,7 +29,7 @@ typedef struct {
 
 void initBack(Background *b, SDL_Surface *screen,const char* path);
 void initMusic(char *music);
-void moveCamera(Background *b, int x, int y);
+//void moveCamera(Background *b, int x, int y);
 void afficherBack(Background b, SDL_Surface *screen);
 void scrolling(Background *b, int direction,int dx);
 void saveScore(ScoreInfo s, char *fileName);
