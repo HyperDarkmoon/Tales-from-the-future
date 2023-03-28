@@ -48,31 +48,11 @@ int main() {
                             done = 1;
                             break;
                         case SDLK_s:
-                        /*while(!gameover) // S botton for singleplayer mode
-                            {   //moveCamera(&b, playerX, playerY);
-                                animerBack(&b,&screen);
-                                SDL_Flip(screen);
-                                draw_hearts(screen,lives,&b);
-                                SDL_Delay(16);
-                                if ((event.key.keysym.sym==SDLK_ESCAPE)||(event.key.keysym.sym==SDL_QUIT)){
-                                  done = 1;
-                                  break;
-                                }
-                            }
-                        */
                             playSinglePlayer(screen,&b,paths);
                         case SDLK_q:
-                            while(!gameover){ //Q botton for multiplayer mode
-                                //moveCamera(&b1, playerX, playerY);
-                                //moveCamera(&b2, playerX, playerY);
-                                playMultiplayer(screen, &b1, &b2,paths);
-                                draw_hearts(screen,lives,&b1);
-                                draw_hearts(screen,lives,&b2);
-                                SDL_Delay(16);
-                                //if (event.key.keysym.sym==SDLK_ESCAPE){
-                                //    done = 1;
-                                //}
-                                break;}
+                            playMultiplayer(screen, &b1, &b2,paths);
+
+                            break;
                         default:
                             break;
                     }

@@ -1,65 +1,6 @@
 
 #include "header.h"
 
-
-
-/*void initBack(Background* b, SDL_Surface* screen, const char* path) {
-    // Load background image
-    SDL_Surface* temp = IMG_Load(path);
-    if (temp == NULL) {
-        printf("Error: could not load background image: %s\n", IMG_GetError());
-        exit(1);
-    }
-
-    // Create a surface with the same format as the screen surface
-    SDL_Surface* background = SDL_CreateRGBSurface(SDL_SWSURFACE, SCREEN_WIDTH, SCREEN_HEIGHT, screen->format->BitsPerPixel, 0, 0, 0, 0);
-    if (background == NULL) {
-        printf("Error: could not create background surface: %s\n", SDL_GetError());
-        exit(1);
-    }
-
-    // Scale background image to fill the entire screen without black borders
-    SDL_Rect src_rect = { 0, 0, temp->w, temp->h };
-    SDL_Rect dest_rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-    if (temp->w * SCREEN_HEIGHT > SCREEN_WIDTH * temp->h) {
-        dest_rect.h = SCREEN_WIDTH * temp->h / temp->w;
-        dest_rect.y = (SCREEN_HEIGHT - dest_rect.h) / 2;
-    }
-    else {
-        dest_rect.w = SCREEN_HEIGHT * temp->w / temp->h;
-        dest_rect.x = (SCREEN_WIDTH - dest_rect.w) / 2;
-    }
-    SDL_SoftStretch(temp, &src_rect, background, &dest_rect);
-
-    // Free temporary surface
-    SDL_FreeSurface(temp);
-
-    // Set background rect x and y to 0
-    b->rect.x = 0;
-    b->rect.y = 0;
-
-    // Set background rect width and height to the width and height of the background surface
-    b->rect.w = background->w;
-    b->rect.h = background->h;
-
-    // Set camera position x and y to 0
-    b->camera_pos.x = 0;
-    b->camera_pos.y = 0;
-
-    // Set camera view width and height to the screen width and height
-    b->camera_pos.w = SCREEN_WIDTH;
-    b->camera_pos.h = SCREEN_HEIGHT;
-
-    // Set background images to the scaled surface
-    b->images[0] = background;
-    b->images[1] = background;
-    b->images[2] = background;
-    b->images[3] = background;
-
-    // Set direction to 0
-    b->direction = 0;
-}
-*/
 void initBack(Background* b, SDL_Surface* screen, const char** paths, int numImages) {
     // Load background images
     for (int i = 0; i < numImages; i++) {
@@ -124,27 +65,7 @@ void initMusic(char *music) {
     }
 
 }
-/*void moveCamera(Background *b, int x, int y) {
-    // Update camera position based on player position
-    b->camera_pos.x = x - (b->camera_pos.w / 2);
-    b->camera_pos.y = y - (b->camera_pos.h / 2);
 
-    // Keep camera inside background bounds
-    if (b->camera_pos.x < 0) {
-        b->camera_pos.x = 0;
-    } else if (b->camera_pos.x > b->rect.w - b->camera_pos.w) {
-        b->camera_pos.x = b->rect.w - b->camera_pos.w;
-    }
-    if (b->camera_pos.y < 0) {
-        b->camera_pos.y = 0;
-    } else if (b->camera_pos.y > b->rect.h - b->camera_pos.h) {
-        b->camera_pos.y = b->rect.h - b->camera_pos.h;
-    }
-
-    // Set camera view width and height to cover entire background image
-    b->camera_pos.w = b->rect.w;
-    b->camera_pos.h = b->rect.h;
-}*/
 
 void afficherBack(Background b, SDL_Surface *screen) {
     // Blit the current image frame of the background to the screen
@@ -237,58 +158,10 @@ void animerBack(Background *b,SDL_Surface **screen) {
     if (b->currentImageIndex >= 4) {
         b->currentImageIndex = 0;
     }
-
-    /*SDL_Event event;
-    char *scoreFile = "scores.txt";
-    ScoreInfo currentScore = { 1000, 120, "John" };
-    ScoreInfo topScores[3] = {
-    {0, 0, ""},
-    {0, 0, ""},
-    {0, 0, ""}
-    };
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_KEYDOWN:
-                switch (event.key.keysym.sym) {
-                    case SDLK_LEFT:
-                        scrolling(b, LEFT,dx);
-                        break;
-                    case SDLK_RIGHT:
-                        scrolling(b, RIGHT,dx);
-                        break;
-                    case SDLK_UP:
-                        scrolling(b, UP,dx);
-                        break;
-                    case SDLK_DOWN:
-                        scrolling(b, DOWN,dx);
-                        break;
-                    case SDLK_m:
-                        saveScore(currentScore, scoreFile);
-                        bestScore(scoreFile, topScores);
-            
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
-        }
-    }*/
-
-    // Blit the current background image to the screen
     afficherBack(*b,*screen);
 }
 
 
-void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2,const char **paths){
-    SDL_FillRect(screen, NULL, 0);   // Clear the screen
-    initBack(b1,screen,paths,4);
-    initBack(b2,screen,paths,4);
-    b1->camera_pos = (SDL_Rect) {0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
-    b2->camera_pos = (SDL_Rect) {SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
-    animerBack(b1,&screen);
-    animerBack(b2,&screen);
-    }
 void draw_hearts(SDL_Surface *surface, float lives,Background*b) {
     SDL_Surface *full_heart = IMG_Load("heart1.png");
     SDL_Surface *half_heart = IMG_Load("heart2.png");
@@ -334,6 +207,11 @@ void playSinglePlayer(SDL_Surface *screen, Background *b, const char **paths) {
     int lives = 3;
     SDL_Event event;
     Uint32 start_time = SDL_GetTicks();
+    ScoreInfo topScores[3] = {
+    {0, 0, ""},
+    {0, 0, ""},
+    {0, 0, ""}
+    };
     // Game loop
     while (!gameover) {
         // Handle events
@@ -390,8 +268,100 @@ void playSinglePlayer(SDL_Surface *screen, Background *b, const char **paths) {
     // Save score
     ScoreInfo si = { score,elapsed_time, "Player 1" };
     saveScore(si, "scores.txt");
+    bestScore("scores.txt", topScores);
 }
 
+void playMultiplayer(SDL_Surface *screen, Background *b1, Background *b2, const char **paths) {
+    SDL_FillRect(screen, NULL, 0);   // Clear the screen
+    initBack(b1, screen, paths, 4);
+    initBack(b2, screen, paths, 4);
+    int gameover = 0;
+    int score = 0;
+    int level = 1;
+    int lives = 3;
+    SDL_Event event;
+    Uint32 start_time = SDL_GetTicks();
+    ScoreInfo topScores[3] = {
+    {0, 0, ""},
+    {0, 0, ""},
+    {0, 0, ""}
+    };
+    // Set camera positions for each background
+    b1->camera_pos = (SDL_Rect) {0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
+    b2->camera_pos = (SDL_Rect) {SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
+    // Game loop
+    while (!gameover) {
+        // Handle events
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT:
+                    gameover = 1;
+                    break;
+                case SDL_KEYDOWN:
+                    switch (event.key.keysym.sym) {
+                        case SDLK_ESCAPE:
+                            gameover = 1;
+                            break;
+                        case SDLK_LEFT:
+                            b1->direction = LEFT;
+                            scrolling(b1, LEFT, 5);
+                            break;
+                        case SDLK_RIGHT:
+                            b1->direction = RIGHT;
+                            scrolling(b1, RIGHT, 5);
+                            break;
+                        case SDLK_UP:
+                            b1->direction = UP;
+                            scrolling(b1, UP, 5);
+                            break;
+                        case SDLK_DOWN:
+                            b1->direction = DOWN;
+                            scrolling(b1, DOWN, 5);
+                            break;
+                        case SDLK_q:
+                            b2->direction = LEFT;
+                            scrolling(b2, LEFT, 5);
+                        case SDLK_d:
+                            b2->direction = RIGHT;
+                            scrolling(b2, RIGHT, 5);
+                        case SDLK_z:
+                            b2->direction = UP;
+                            scrolling(b2, UP, 5);
+                        case SDLK_s:
+                            b2->direction = DOWN;
+                            scrolling(b2, DOWN, 5);
+                    }
+                    break;
+            }
 
+        }
+        score += level;
+        if (score >= 10 * level) {
+            level++;
+        }
 
+        // Draw background and hearts
+        animerBack(b1,&screen);
+        draw_hearts(screen, lives, b1);
+        animerBack(b2,&screen);
+        draw_hearts(screen, lives, b2);
+        
+
+        // Update screen
+        SDL_Flip(screen);
+
+        // Wait for 20 milliseconds
+        SDL_Delay(20);
+        for(int i=0;i<2;i++){
+            Uint32 elapsed_time = get_elapsed_time(start_time);
+            printf("Elapsed time: %u milliseconds\n", elapsed_time);
+            // Save score
+            ScoreInfo si = { score,elapsed_time, "Player 1" };
+            saveScore(si, "scores.txt");
+            bestScore("scores.txt", topScores);
+        }
+    
+    }
+
+}
 
