@@ -5,11 +5,11 @@ int main() {
     SDL_Surface *screen = NULL;
     Background b,b1,b2;
     SDL_Event event;
-    const char path[30]="111.png";
     float lives = 3;
     SDL_Surface* heart = NULL;
-    
-
+    const char* paths[] = {"images/bg1.png", "images/bg2.png", "images/bg3.png", "images/bg4.png"};
+    const int dx = 10; // position of the player
+    int gameover=0;
     // Initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == -1) {
         printf("Unable to initialize SDL: %s\n", SDL_GetError());
@@ -24,7 +24,7 @@ int main() {
     }
 
     // Initialize the background
-    initBack(&b,screen,"111.png");
+    initBack(&b,screen,paths,4);
     initMusic("background_music.mp3");
     Mix_Music *bgMusic = Mix_LoadMUS("background_music.mp3");
     if (bgMusic == NULL) {
@@ -38,28 +38,41 @@ int main() {
     while (!done) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) { 
+                 case SDL_QUIT:
+                    done = 1;
+                    break;
                
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
-                         case SDLK_ESCAPE:
+                        case SDLK_ESCAPE:
                             done = 1;
                             break;
-                        case SDLK_s: // S botton for singleplayer mode
-                            //moveCamera(&b, playerX, playerY);
-                            animerBack(&b,&screen);
-                            SDL_Flip(screen);
-                            draw_hearts(screen,lives,&b);
-                            SDL_Delay(10);
-
-                            break;
-                        case SDLK_q: //Q botton for multiplayer mode
-                            //moveCamera(&b1, playerX, playerY);
-                            //moveCamera(&b2, playerX, playerY);
-                            playMultiplayer(screen, &b1, &b2);
-                            draw_hearts(screen,lives,&b1);
-                            draw_hearts(screen,lives,&b2);
-                            SDL_Delay(10);
-                            break;
+                        case SDLK_s:
+                        /*while(!gameover) // S botton for singleplayer mode
+                            {   //moveCamera(&b, playerX, playerY);
+                                animerBack(&b,&screen);
+                                SDL_Flip(screen);
+                                draw_hearts(screen,lives,&b);
+                                SDL_Delay(16);
+                                if ((event.key.keysym.sym==SDLK_ESCAPE)||(event.key.keysym.sym==SDL_QUIT)){
+                                  done = 1;
+                                  break;
+                                }
+                            }
+                        */
+                            playSinglePlayer(screen,&b,paths);
+                        case SDLK_q:
+                            while(!gameover){ //Q botton for multiplayer mode
+                                //moveCamera(&b1, playerX, playerY);
+                                //moveCamera(&b2, playerX, playerY);
+                                playMultiplayer(screen, &b1, &b2,paths);
+                                draw_hearts(screen,lives,&b1);
+                                draw_hearts(screen,lives,&b2);
+                                SDL_Delay(16);
+                                //if (event.key.keysym.sym==SDLK_ESCAPE){
+                                //    done = 1;
+                                //}
+                                break;}
                         default:
                             break;
                     }

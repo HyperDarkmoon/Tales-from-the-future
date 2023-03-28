@@ -3,7 +3,7 @@
 
 
 
-void initBack(Background* b, SDL_Surface* screen, const char* path) {
+/*void initBack(Background* b, SDL_Surface* screen, const char* path) {
     // Load background image
     SDL_Surface* temp = IMG_Load(path);
     if (temp == NULL) {
@@ -59,7 +59,62 @@ void initBack(Background* b, SDL_Surface* screen, const char* path) {
     // Set direction to 0
     b->direction = 0;
 }
+*/
+void initBack(Background* b, SDL_Surface* screen, const char** paths, int numImages) {
+    // Load background images
+    for (int i = 0; i < numImages; i++) {
+        SDL_Surface* temp = IMG_Load(paths[i]);
+        if (temp == NULL) {
+            printf("Error: could not load background image: %s\n", IMG_GetError());
+            exit(1);
+        }
+        b->images[i] = temp;
+    }
+    // Create a surface with the same format as the screen surface
+    SDL_Surface* background = SDL_CreateRGBSurface(SDL_SWSURFACE, SCREEN_WIDTH, SCREEN_HEIGHT, screen->format->BitsPerPixel, 0, 0, 0, 0);
+    if (background == NULL) {
+        printf("Error: could not create background surface: %s\n", SDL_GetError());
+        exit(1);
+    }
 
+    // Scale background images to fill the entire screen without black borders
+    SDL_Rect src_rect = { 0, 0, b->images[0]->w, b->images[0]->h };
+    SDL_Rect dest_rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+    if (b->images[0]->w * SCREEN_HEIGHT > SCREEN_WIDTH * b->images[0]->h) {
+        dest_rect.h = SCREEN_WIDTH * b->images[0]->h / b->images[0]->w;
+        dest_rect.y = (SCREEN_HEIGHT - dest_rect.h) / 2;
+    }
+    else {
+        dest_rect.w = SCREEN_HEIGHT * b->images[0]->w / b->images[0]->h;
+        dest_rect.x = (SCREEN_WIDTH - dest_rect.w) / 2;
+    }
+    for (int i = 0; i < numImages; i++) {
+        SDL_Surface* temp = b->images[i];
+        SDL_SoftStretch(temp, &src_rect, background, &dest_rect);
+    }
+
+    // Set background rect x and y to 0
+    b->rect.x = 0;
+    b->rect.y = 0;
+
+    // Set background rect width and height to the width and height of the background surface
+    b->rect.w = background->w;
+    b->rect.h = background->h;
+
+    // Set camera position x and y to 0
+    b->camera_pos.x = 0;
+    b->camera_pos.y = 0;
+
+    // Set camera view width and height to the screen width and height
+    b->camera_pos.w = SCREEN_WIDTH;
+    b->camera_pos.h = SCREEN_HEIGHT;
+
+    // Set direction to 0
+    b->direction = 0;
+
+    // Free temporary surface
+    SDL_FreeSurface(background);
+}
 
 void initMusic(char *music) {
     // Initialize SDL_mixer
@@ -175,7 +230,7 @@ void bestScore(char *filename, ScoreInfo t[]) {
     }
 }
 void animerBack(Background *b,SDL_Surface **screen) {
-    const int dx = 10; 
+    
 
     b->currentImageIndex++;
 
@@ -183,7 +238,7 @@ void animerBack(Background *b,SDL_Surface **screen) {
         b->currentImageIndex = 0;
     }
 
-    SDL_Event event;
+    /*SDL_Event event;
     char *scoreFile = "scores.txt";
     ScoreInfo currentScore = { 1000, 120, "John" };
     ScoreInfo topScores[3] = {
@@ -218,17 +273,17 @@ void animerBack(Background *b,SDL_Surface **screen) {
             default:
                 break;
         }
-    }
+    }*/
 
     // Blit the current background image to the screen
     afficherBack(*b,*screen);
 }
 
 
-void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2){
+void playMultiplayer(SDL_Surface *screen,Background *b1, Background *b2,const char **paths){
     SDL_FillRect(screen, NULL, 0);   // Clear the screen
-    initBack(b1, screen,"111.png");
-    initBack(b2, screen,"111.png");
+    initBack(b1,screen,paths,4);
+    initBack(b2,screen,paths,4);
     b1->camera_pos = (SDL_Rect) {0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
     b2->camera_pos = (SDL_Rect) {SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT};
     animerBack(b1,&screen);
@@ -265,6 +320,77 @@ void draw_hearts(SDL_Surface *surface, float lives,Background*b) {
     SDL_FreeSurface(empty_heart);
 }
 
+Uint32 get_elapsed_time(Uint32 start_time) {
+    Uint32 current_time = SDL_GetTicks();
+    Uint32 elapsed_time = current_time - start_time;
+    return elapsed_time;
+}
+void playSinglePlayer(SDL_Surface *screen, Background *b, const char **paths) {
+    // Initialize background
+    initBack(b, screen, paths, 4);
+    int gameover = 0;
+    int score = 0;
+    int level = 1;
+    int lives = 3;
+    SDL_Event event;
+    Uint32 start_time = SDL_GetTicks();
+    // Game loop
+    while (!gameover) {
+        // Handle events
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT:
+                    gameover = 1;
+                    break;
+                case SDL_KEYDOWN:
+                    switch (event.key.keysym.sym) {
+                        case SDLK_ESCAPE:
+                            gameover = 1;
+                            break;
+                        case SDLK_LEFT:
+                            b->direction = LEFT;
+                            scrolling(b, LEFT, 5);
+                            break;
+                        case SDLK_RIGHT:
+                            b->direction = RIGHT;
+                            scrolling(b, RIGHT, 5);
+                            break;
+                        case SDLK_UP:
+                            b->direction = UP;
+                            scrolling(b, UP, 5);
+                            break;
+                        case SDLK_DOWN:
+                            b->direction = DOWN;
+                            scrolling(b, DOWN, 5);
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        // Update score and level
+        score += level;
+        if (score >= 10 * level) {
+            level++;
+        }
+
+        // Draw background and hearts
+        animerBack(b,&screen);
+        draw_hearts(screen, lives, b);
+        
+
+        // Update screen
+        SDL_Flip(screen);
+
+        // Wait for 20 milliseconds
+        SDL_Delay(20);
+    }
+    Uint32 elapsed_time = get_elapsed_time(start_time);
+    printf("Elapsed time: %u milliseconds\n", elapsed_time);
+    // Save score
+    ScoreInfo si = { score,elapsed_time, "Player 1" };
+    saveScore(si, "scores.txt");
+}
 
 
 
