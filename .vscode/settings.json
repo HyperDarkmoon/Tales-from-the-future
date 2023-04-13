@@ -3,5 +3,6 @@
         "sdl_mixer.h": "c",
         "sdl.h": "c",
         "sdl_image.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
